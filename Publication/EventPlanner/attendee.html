@@ -1,0 +1,66 @@
+<html>
+  <div id="left"></div>
+  <div id="right"></div>
+  <div id="top"></div>
+  <div id="bottom"></div>
+
+  <div class = 'head'><b>Event Planner</b></div>
+  <input type = "button" id = "toHome" value = "Back to Home Page" onclick="location.href='index.html'">
+  <div id = "navigation">
+    <input type="button" id="create" value="To Create Event">
+    <input type="button" id="manage" value="To Manage Events">
+    <div id = "error"></div>
+  </div>
+  <link rel="stylesheet" href="attendee.css">
+  <body>
+    <div id = "loginWindow">
+      <div id="notLoggedIn">
+        <div align="right" id = "usernameText">
+        Username:
+        <input id = "username" type="text"/>
+        </div>
+        <div align ="right" id = "passwordText">
+        Password:
+        <input id = "password" type="text"/>
+        </div>
+        <div align = "right">
+          <input type="button" id = "login" value="Login"/>
+          <input type="button" id = "signup" onclick="location.href='signup.html'" value = "Sign Up"/>
+        </div>
+      </div>
+      <div id="loggedIn">
+        <div align="right" id = "loginStatus">Currently logged in as: </div>
+        <div align="right" id = "logoutMessage">
+          <span>Not you?</span>
+          <input type="button" id="logout" value="Log Out"></input>
+        </div>
+      </div>
+    </div>
+
+    <p><br \></p>
+    <div style="display: flex; justify-content: flex-end" id = "calendarStuff">
+      <input type="button" id="changeView" value="Calendar View"></input>
+      <input type="button" id="timeChange" value="12 hour mode"></input>
+    </div>
+    <table id="Events">
+      <tr>
+        <th>Event Name</th>
+        <th>Date</th>
+        <th>Organizer</th>
+        <th>Number of Possible Attendees</th>
+        <th>Public vs Private</th>
+        <th>Join?</th>
+      </tr>
+    </table>
+    <table id="Calendar">
+    </table>
+    <table id = "eventTable">
+    </table>
+  </body>
+  <script src = "index.js"></script>
+  <script src="Event.js"></script>
+  <script src="storageManager.js"></script>
+  <script src="EventClass.js"></script>
+  <script src="attendee.js"></script>
+      <!--<script src="dummyFile.js"></script>-->
+</html>

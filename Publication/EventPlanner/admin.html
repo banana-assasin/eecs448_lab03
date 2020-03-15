@@ -1,0 +1,105 @@
+<html>
+  <div id="left"></div>
+  <div id="right"></div>
+  <div id="top"></div>
+  <div id="bottom"></div>
+  <div id= "stuffToHide2"><div class = 'head'><b>Event Planner</b></div></div>
+  <input type = "button" id = "toHome" value = "Back to Home Page" onclick="location.href='index.html'">
+  <div id = navigation>
+    <input type="button" id="toAttendee" value="To Join Event" onclick="location.href='attendee.html'">
+    <input type="button" id="toManager" value="To Manage Events" onclick="location.href='manager.html'">
+  </div>
+  <div id="stuffToHide3">
+  <div id = "loginWindow">
+    <div id="notLoggedIn">
+      <div align="right" id = "usernameText">
+      Username:
+      <input id = "username" type="text"/>
+      </div>
+      <div align ="right" id = "passwordText">
+      Password:
+      <input id = "password" type="text"/>
+      </div>
+      <div align = "right">
+        <input type="button" id = "login" value="Login"/>
+        <input type="button" id = "signup" onclick="location.href='signup.html'" value = "Sign Up"/>
+      </div>
+    </div>
+    <div id="loggedIn">
+      <div align="right" id = "loginStatus">Currently logged in as: </div>
+      <div align="right" id = "logoutMessage">
+        <span>Not you?</span>
+        <input type="button" id="logout" value="Log Out"></input>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+  <link rel = "stylesheet" href="admin.css">
+  <body>
+    <br>
+  <p id = "notLoggedInAdmin" align = "center" >You need to be logged in to view this page.</p>
+
+  <div id = "stuffToHide">
+    <div class = "center">
+      <br> <br> <br>
+      <head><b>*Event Name:</b></head>
+      <br>
+      <input id ="eventName" type="text" placeholder="Example: My Cool Birthday"></input><span id="eventNameError"></span>
+      <br>
+      <br>
+        <b>*Event Date: </b>
+      </p>
+
+      <input id ="month" type="text" placeholder="month (mm)" />
+      <input id ="day" type="text" placeholder="day (dd)"/>
+      <input id ="year" type="text" placeholder ="year (yyyy)"/>
+      <p>
+
+      </p>
+      <button id="validate">Select Time(s)</button>
+      <span id="TypeErrorMessage"> </span>
+      <span id="MonthErrorMessage"> </span>
+      <span id="DayErrorMessage"> </span>
+      <span id="YearErrorMessage"> </span>
+      <div style="display: flex; justify-content: flex-end">
+        <div class="btn-group" id="button-group">
+          <button id="button24">12 Hour Mode</button>
+        </div>
+      </div>
+      <p>
+
+
+      </p>
+      <table align = "center" id="TimeTable"></table>
+      <script src="EventFunctions.js"></script> <!-- this reads in the event date and stuff. It will later have to read in everything from the page -->
+      <script src="Event.js"></script>  <!-- Joshua's script (Date Validation)-->
+      <script src="storageManager.js"></script>
+      <script src="TimeTable.js"></script>  <!-- TimeTable script (appears after date validation?)-->
+      <p><br />Click this and then type a password to make your event private from others. If you don't want your event to private, then just hit submit.</p>
+
+      <input type="checkbox" id="privacy">Private
+      <br>
+      <br>
+
+
+      <script src="admin.js"></script>
+      <!-- the scripts above prevents the password below to show up until the event occurs -->
+      <p id="passwordTextForEvent">
+          Password:
+      </p>
+
+      <input type="text" id="passwordInput" value="">
+      <span id="passError"></span>
+      <br>
+      <p></p>
+      <button id="submit">Submit</button>
+    </div>
+    <center>  <p id="allComplete"></center>
+      <script src="index.js"></script>
+      <!--<script src="dummyFile.js"></script>-->
+    </div>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+CSS borders around each page:
+https://css-tricks.com/body-border/
+
+date method help in attendee.js:
+https://www.w3schools.com/js/js_date_methods_set.asp
+
+html navigation help:
+https://stackoverflow.com/questions/24903148/navigate-between-html-files
+
+web storage help:
+https://www.w3schools.com/html/html5_webstorage.asp
+
+easteregg stuff:
+https://medium.com/javascript-in-plain-english/how-to-detect-a-sequence-of-keystrokes-in-javascript-83ec6ffd8e93

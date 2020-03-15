@@ -1,0 +1,94 @@
+.head{
+  position: relative;
+  top: 50px;
+  text-align: center;
+  font: 48px arial, sans-serif;
+  color: #0B3948;
+}
+
+body{
+  font-family: Arial;
+  margin: 40px;
+  text-align: center;
+  position: relative;
+  background-color: #dddddd;
+}
+
+  ul{
+    text-align: center;
+
+  }
+
+#Join, #manage, #create{
+
+  border-width: medium;
+  background-color: #BBBBBB;
+  border-color: #AAAAAA;
+  height: 50;
+  width: 250;
+
+}
+
+#navigation {
+  position: relative;
+  text-align: center;
+  top: 10px;
+}
+
+#logo {
+  position: relative;
+  top: 40px;
+}
+
+#loginWindow {
+  position: relative;
+  bottom: 260px;
+}
+
+#login, #logout, #signup, #confirm, #cancel {
+  font: 15px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 30;
+  width: 79.5;
+}
+
+#create, #manage, #join {
+  font: 18px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 60;
+  width: 200;
+}
+
+#error {
+  position: relative;
+  top: 20px;
+}
+
+#squares {
+  position: relative;
+  bottom: 300px;
+}
+
+/*the following border trick was taken from https://css-tricks.com/body-border/ */
+#top, #bottom, #left, #right {
+	background: #cccccc;
+	position: fixed;
+	z-index: 100;
+}
+#left, #right {
+	top: 0; bottom: 0;
+	width: 15px;
+}
+#left { left: 0; }
+#right { right: 0; }
+
+#top, #bottom {
+	left: 0; right: 0;
+	height: 15px;
+}
+#top { top: 0; }
+#bottom { bottom: 0; }

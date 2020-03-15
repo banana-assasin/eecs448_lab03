@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>TimeTable.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="Event.html">
+                  Event.js
+                </a>
+              
+                
+                <a class="source" href="EventClass.html">
+                  EventClass.js
+                </a>
+              
+                
+                <a class="source" href="EventFunctions.html">
+                  EventFunctions.js
+                </a>
+              
+                
+                <a class="source" href="TimeTable.html">
+                  TimeTable.js
+                </a>
+              
+                
+                <a class="source" href="admin.html">
+                  admin.js
+                </a>
+              
+                
+                <a class="source" href="attendee.html">
+                  attendee.js
+                </a>
+              
+                
+                <a class="source" href="dummyFile.html">
+                  dummyFile.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="manager.html">
+                  manager.js
+                </a>
+              
+                
+                <a class="source" href="signup.html">
+                  signup.js
+                </a>
+              
+                
+                <a class="source" href="storageManager.html">
+                  storageManager.js
+                </a>
+              
+                
+                <a class="source" href="storageTest.html">
+                  storageTest.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>TimeTable.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p> Script that causes a table of possible times to appear when creating an event</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TimeTable</span></span>{
+
+  <span class="hljs-keyword">constructor</span>(mode24){<span class="hljs-keyword">this</span>.mode24 = mode24;}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Not’s the value of mode24 and changes the button text to reflect the change</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  changeMode(){
+    <span class="hljs-keyword">this</span>.mode24 = !<span class="hljs-keyword">this</span>.mode24;
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.mode24)
+    {
+      <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#button24"</span>).innerText = <span class="hljs-string">"12 Hour Mode"</span>;
+    }
+    <span class="hljs-keyword">else</span>
+    {
+      <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#button24"</span>).innerText = <span class="hljs-string">"24 Hour Mode"</span>;
+    }
+    <span class="hljs-keyword">this</span>.openTable();
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>this function systematically sets all of the table values to correctly reflect the base 60, 20 minute timeslots as well as accounting for
+12 hour and 24 hour mode and adding the suffix “a.m.” or “p.m.” to correctly tell the user what times they are working with.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  getTime = <span class="hljs-function">(<span class="hljs-params">n</span>) =&gt;</span>
+  {
+    n = n<span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">let</span> totalMinutes = <span class="hljs-number">20</span>*n + <span class="hljs-number">300</span>;
+    <span class="hljs-keyword">let</span> timeSuffix = <span class="hljs-string">""</span>;
+    <span class="hljs-keyword">if</span>(n&gt;<span class="hljs-number">20</span>)
+    {
+      totalMinutes = <span class="hljs-number">20</span>*(n<span class="hljs-number">-22</span>)+<span class="hljs-number">800</span>;
+    }
+    <span class="hljs-keyword">let</span> minutes = totalMinutes % <span class="hljs-number">60</span>;
+    <span class="hljs-keyword">if</span>(n%<span class="hljs-number">3</span>==<span class="hljs-number">0</span>)
+    {
+      minutes = <span class="hljs-string">"00"</span>;
+    }
+    <span class="hljs-keyword">let</span> hours = (totalMinutes - minutes)/<span class="hljs-number">60</span>;
+    <span class="hljs-keyword">if</span>(n&lt;<span class="hljs-number">15</span>)
+    {
+      hours = <span class="hljs-string">"0"</span> + hours;
+    }
+    <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.mode24 &amp;&amp; hours&lt;<span class="hljs-number">12</span>)
+    {
+      timeSuffix = <span class="hljs-string">"a.m."</span>;
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.mode24 &amp;&amp; hours&gt;=<span class="hljs-number">12</span>)
+    {
+      timeSuffix = <span class="hljs-string">"p.m."</span>;
+    }
+    <span class="hljs-keyword">if</span>(hours&gt;<span class="hljs-number">12</span> &amp;&amp; !<span class="hljs-keyword">this</span>.mode24)
+    {
+      hours = <span class="hljs-string">"0"</span> + hours - <span class="hljs-number">12</span>;
+    }
+    <span class="hljs-keyword">return</span>(hours + <span class="hljs-string">":"</span> + minutes + <span class="hljs-string">" "</span> + timeSuffix);
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>generates the table of times if there are no error messages currently from the validation of the month.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  openTable = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+  {
+    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#TypeErrorMessage"</span>).innerText==<span class="hljs-string">""</span>&amp;&amp;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#MonthErrorMessage"</span>).innerText==<span class="hljs-string">""</span>&amp;&amp;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText==<span class="hljs-string">""</span>&amp;&amp;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#YearErrorMessage"</span>).innerText==<span class="hljs-string">""</span>)
+    {
+      <span class="hljs-keyword">let</span> table = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#TimeTable"</span>);
+      <span class="hljs-keyword">while</span>(table.firstChild)
+      {
+        table.removeChild(table.firstChild);
+      }
+      <span class="hljs-keyword">let</span> head = table.insertRow(<span class="hljs-number">0</span>);
+      head.innerHTML = <span class="hljs-string">"&lt;th&gt;20 Minute Time Slot&lt;/th&gt;&lt;th&gt;Available&lt;/th&gt;&lt;th&gt;20 Minute Time Slot&lt;/th&gt;&lt;th&gt;Available&lt;/th&gt;&lt;th&gt;20 Minute Time Slot&lt;/th&gt;&lt;th&gt;Available?&lt;/th&gt;"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>the creation of this table is split into 3 for loops which reflects the 3 table setup we used for the timetable
+we went with a 3 table setup to better use the space we have on a webpage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">1</span>;i&lt;=<span class="hljs-number">21</span>;i++)
+        {
+          table.insertRow(i);
+          table.rows[i].insertCell(<span class="hljs-number">0</span>);
+          table.rows[i].insertCell(<span class="hljs-number">1</span>);
+          table.rows[i].insertCell(<span class="hljs-number">2</span>);
+          table.rows[i].insertCell(<span class="hljs-number">3</span>);
+          table.rows[i].insertCell(<span class="hljs-number">4</span>);
+          table.rows[i].insertCell(<span class="hljs-number">5</span>);
+          table.rows[i].cells[<span class="hljs-number">0</span>].innerText = <span class="hljs-keyword">this</span>.getTime(i);
+          <span class="hljs-keyword">let</span> x = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"INPUT"</span>);<span class="hljs-comment">//adds a checkbox to allow the user to select any of the 20 minute timeslots</span>
+          x.setAttribute(<span class="hljs-string">"type"</span>, <span class="hljs-string">"checkbox"</span>);
+          x.setAttribute(<span class="hljs-string">"id"</span>, <span class="hljs-string">"checkBox"</span>+i);
+          table.rows[i].cells[<span class="hljs-number">1</span>].addEventListener(<span class="hljs-string">"click"</span>, () =&gt;{
+            <span class="hljs-keyword">let</span> timeSelect = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#checkBox"</span> +i);<span class="hljs-comment">//lets the user click anywhere inside of the cell, instead of just inside the checkbox, to select a timeslot</span>
+            <span class="hljs-keyword">if</span>(timeSelect.checked)
+            {
+              timeSelect.checked = <span class="hljs-literal">false</span>;
+            }
+            <span class="hljs-keyword">else</span>
+            {
+              timeSelect.checked = <span class="hljs-literal">true</span>;
+            }
+          })
+          x.addEventListener(<span class="hljs-string">"click"</span>, () =&gt; {
+            <span class="hljs-keyword">let</span> timeSelect = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#checkBox"</span> +i);
+            <span class="hljs-keyword">if</span>(timeSelect.checked)
+            {
+              timeSelect.checked = <span class="hljs-literal">false</span>;
+            }
+            <span class="hljs-keyword">else</span>
+            {
+              timeSelect.checked = <span class="hljs-literal">true</span>;
+            }
+          })
+          table.rows[i].cells[<span class="hljs-number">1</span>].appendChild(x);<span class="hljs-comment">//appends 'x' to the table</span>
+
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>the second for loop is similar to the first, but allows us to have a second column of timetable values.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">1</span>;i&lt;=<span class="hljs-number">21</span>;i++)
+        {
+          table.rows[i].cells[<span class="hljs-number">2</span>].innerText = <span class="hljs-keyword">this</span>.getTime(i+<span class="hljs-number">21</span>);
+          <span class="hljs-keyword">let</span> x = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"INPUT"</span>);
+          x.setAttribute(<span class="hljs-string">"type"</span>, <span class="hljs-string">"checkbox"</span>);
+          x.setAttribute(<span class="hljs-string">"id"</span>, <span class="hljs-string">"checkBox"</span>+(i+<span class="hljs-number">21</span>));
+          table.rows[i].cells[<span class="hljs-number">3</span>].addEventListener(<span class="hljs-string">"click"</span>, () =&gt;{
+            <span class="hljs-keyword">let</span> timeSelect = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#checkBox"</span> +(i+<span class="hljs-number">21</span>));
+            <span class="hljs-keyword">if</span>(timeSelect.checked)
+            {
+              timeSelect.checked = <span class="hljs-literal">false</span>;
+            }
+            <span class="hljs-keyword">else</span>
+            {
+              timeSelect.checked = <span class="hljs-literal">true</span>;
+            }
+          })
+          x.addEventListener(<span class="hljs-string">"click"</span>, () =&gt; {
+            <span class="hljs-keyword">let</span> timeSelect = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#checkBox"</span> +(i+<span class="hljs-number">21</span>));
+            <span class="hljs-keyword">if</span>(timeSelect.checked)
+            {
+              timeSelect.checked = <span class="hljs-literal">false</span>;
+            }
+            <span class="hljs-keyword">else</span>
+            {
+              timeSelect.checked = <span class="hljs-literal">true</span>;
+            }
+          })
+          table.rows[i].cells[<span class="hljs-number">3</span>].appendChild(x);
+
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>the third for loop that allows for the third table column.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">1</span>;i&lt;=<span class="hljs-number">12</span>;i++)
+        {
+          table.rows[i].cells[<span class="hljs-number">4</span>].innerText = <span class="hljs-keyword">this</span>.getTime(i + <span class="hljs-number">42</span>);
+          <span class="hljs-keyword">let</span> x = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"INPUT"</span>);
+          x.setAttribute(<span class="hljs-string">"type"</span>, <span class="hljs-string">"checkbox"</span>);
+          x.setAttribute(<span class="hljs-string">"id"</span>, <span class="hljs-string">"checkBox"</span>+(i+<span class="hljs-number">42</span>));
+          table.rows[i].cells[<span class="hljs-number">5</span>].addEventListener(<span class="hljs-string">"click"</span>, () =&gt;{
+            <span class="hljs-keyword">let</span> timeSelect = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#checkBox"</span> +(i+<span class="hljs-number">42</span>));
+            <span class="hljs-keyword">if</span>(timeSelect.checked)
+            {
+              timeSelect.checked = <span class="hljs-literal">false</span>;
+            }
+            <span class="hljs-keyword">else</span>
+            {
+              timeSelect.checked = <span class="hljs-literal">true</span>;
+            }
+          })
+          x.addEventListener(<span class="hljs-string">"click"</span>, () =&gt; {
+            <span class="hljs-keyword">let</span> timeSelect = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#checkBox"</span> +(i+<span class="hljs-number">42</span>));
+            <span class="hljs-keyword">if</span>(timeSelect.checked)
+            {
+              timeSelect.checked = <span class="hljs-literal">false</span>;
+            }
+            <span class="hljs-keyword">else</span>
+            {
+              timeSelect.checked = <span class="hljs-literal">true</span>;
+            }
+          })
+          table.rows[i].cells[<span class="hljs-number">5</span>].appendChild(x);
+
+        }
+      }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#TimeTable"</span>).firstChild)
+    {
+      <span class="hljs-keyword">let</span> table = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#TimeTable"</span>);
+      <span class="hljs-keyword">while</span>(table.firstChild)
+      {
+        table.removeChild(table.firstChild);
+      }
+    }
+
+  }
+}</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

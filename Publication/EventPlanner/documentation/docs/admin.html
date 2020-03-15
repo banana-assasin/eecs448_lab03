@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>admin.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="Event.html">
+                  Event.js
+                </a>
+              
+                
+                <a class="source" href="EventClass.html">
+                  EventClass.js
+                </a>
+              
+                
+                <a class="source" href="EventFunctions.html">
+                  EventFunctions.js
+                </a>
+              
+                
+                <a class="source" href="TimeTable.html">
+                  TimeTable.js
+                </a>
+              
+                
+                <a class="source" href="admin.html">
+                  admin.js
+                </a>
+              
+                
+                <a class="source" href="attendee.html">
+                  attendee.js
+                </a>
+              
+                
+                <a class="source" href="dummyFile.html">
+                  dummyFile.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="manager.html">
+                  manager.js
+                </a>
+              
+                
+                <a class="source" href="signup.html">
+                  signup.js
+                </a>
+              
+                
+                <a class="source" href="storageManager.html">
+                  storageManager.js
+                </a>
+              
+                
+                <a class="source" href="storageTest.html">
+                  storageTest.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>admin.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>after the DOM content is loaded the js will store a bunch of objects from the html to be used later.*/</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">let</span> storeManager = <span class="hljs-keyword">new</span> StorageManager();
+
+<span class="hljs-keyword">if</span>(storeManager.getCurrentAccount()!=<span class="hljs-string">""</span>)
+{
+  <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#notLoggedInAdmin"</span>).style.visibility = <span class="hljs-string">"hidden"</span>;
+}
+<span class="hljs-keyword">else</span>
+{
+  <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#stuffToHide"</span>).style.visibility = <span class="hljs-string">"hidden"</span>;
+  <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#stuffToHide2"</span>).style.display = <span class="hljs-string">"none"</span>;
+  <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#stuffToHide3"</span>).style.display = <span class="hljs-string">"none"</span>;
+  <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#toManager"</span>).style.display = <span class="hljs-string">"none"</span>
+}
+
+<span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"DOMContentLoaded"</span>,() =&gt; {
+  <span class="hljs-keyword">let</span> eventMonth = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#month"</span>);
+  <span class="hljs-keyword">let</span> eventDay = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#day"</span>);
+  <span class="hljs-keyword">let</span> eventYear = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#year"</span>);
+  <span class="hljs-keyword">let</span> theButtons = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#button-group"</span>);
+  <span class="hljs-keyword">let</span> button24 = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#button24"</span>);
+  <span class="hljs-keyword">let</span> submitButton = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#submit"</span>);
+  <span class="hljs-keyword">let</span> passwordInput = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#passwordInput"</span>);
+  <span class="hljs-keyword">let</span> passwordText = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#passwordTextForEvent"</span>);
+  <span class="hljs-keyword">let</span> private = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#privacy"</span>);
+
+  <span class="hljs-keyword">let</span> t = <span class="hljs-keyword">new</span> TimeTable(<span class="hljs-literal">true</span>);
+  <span class="hljs-keyword">let</span> ev = <span class="hljs-keyword">new</span> EventFunctions();
+  <span class="hljs-keyword">let</span> checkDate = <span class="hljs-literal">false</span>;
+
+
+  theButtons.style.display = <span class="hljs-string">"none"</span>;<span class="hljs-comment">//hides buttons on load of the page</span>
+  passwordInput.style.display = <span class="hljs-string">"none"</span>;<span class="hljs-comment">//hides the password text on load of page</span>
+  passwordText.style.display = <span class="hljs-string">"none"</span>;<span class="hljs-comment">//hides the password input box on load of page</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>  @pre none
+  @post gives an error message if the date is invalid, otherwise opens a table of times.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p> this function simply validates a date given by the user in the 3 input boxes month, day and year.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#validate"</span>).addEventListener(<span class="hljs-string">"click"</span>, (e) =&gt;  {
+    <span class="hljs-keyword">let</span> month = <span class="hljs-built_in">parseInt</span>(eventMonth.value);
+    <span class="hljs-keyword">let</span> day = <span class="hljs-built_in">parseInt</span>(eventDay.value);
+    <span class="hljs-keyword">let</span> year = <span class="hljs-built_in">parseInt</span>(eventYear.value);
+    checkDate = <span class="hljs-literal">true</span>;
+
+    ev.clientOfClassValidateEverything(day, month, year);
+    t.openTable();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>shows the buttons if the date is valid, otherwise it rehides them.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span>(ev.isValidDate()){
+       theButtons.style.display = <span class="hljs-string">"initial"</span>;
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        theButtons.style.display = <span class="hljs-string">"none"</span>;
+    }
+
+  })</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>@pre none
+@post checks to show or hide the password and input box as the checkbox is checked/unchecked.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"change"</span>, (e) =&gt; {
+      <span class="hljs-keyword">if</span>(private.checked)
+      {
+          passwordInput.style.display = <span class="hljs-string">"initial"</span>;
+          passwordText.style.display = <span class="hljs-string">"initial"</span>;
+      }
+      <span class="hljs-keyword">else</span>{
+          passwordInput.style.display = <span class="hljs-string">"none"</span>;
+          passwordText.style.display = <span class="hljs-string">"none"</span>;
+      }
+  })</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>  @pre table is visible
+  @post switches the button between 12 and 24 hour modes and updates the bool associated with it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  button24.addEventListener(<span class="hljs-string">"click"</span>, (e) =&gt; {
+      t.changeMode();
+  })</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>  @pre all of the fields are filled out in ways that are valid, this is checked and the submit button will not complete if
+        fields are not filled out, or not filled out correctly.
+  @post creates a new event with the authorName, eventName, date, and times and passes it to localStorage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  submitButton.addEventListener(<span class="hljs-string">"click"</span>, (e) =&gt; {
+      <span class="hljs-keyword">let</span> stopSubmit = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#allComplete"</span>);
+      <span class="hljs-keyword">let</span> eventName = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#eventName"</span>).value;
+      <span class="hljs-keyword">let</span> eventError = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#eventNameError"</span>);
+      <span class="hljs-keyword">let</span> anyError = <span class="hljs-literal">false</span>;
+      <span class="hljs-keyword">let</span> anyTimes = <span class="hljs-literal">true</span>;
+      <span class="hljs-keyword">let</span> allTimes = [];
+      <span class="hljs-keyword">let</span> message = <span class="hljs-string">"Please correct and/or complete fields above."</span>;
+      <span class="hljs-keyword">let</span> message1 = <span class="hljs-string">"&lt;-- Required Field; "</span>;
+      <span class="hljs-keyword">let</span> month = <span class="hljs-built_in">parseInt</span>(eventMonth.value);
+      <span class="hljs-keyword">let</span> day = <span class="hljs-built_in">parseInt</span>(eventDay.value);
+      <span class="hljs-keyword">let</span> year = <span class="hljs-built_in">parseInt</span>(eventYear.value);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>checks to see if the date is correct</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      ev.clientOfClassValidateEverything(day, month, year);
+      <span class="hljs-keyword">if</span>(checkDate)
+      {
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#TypeErrorMessage"</span>).innerText==<span class="hljs-string">""</span>&amp;&amp;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#MonthErrorMessage"</span>).innerText==<span class="hljs-string">""</span>&amp;&amp;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText==<span class="hljs-string">""</span>&amp;&amp;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#YearErrorMessage"</span>).innerText==<span class="hljs-string">""</span>)
+        {
+            anyTimes = <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">1</span>;i&lt;= <span class="hljs-number">54</span>; i++)
+            {
+                <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#checkBox"</span> +i).checked)
+                {
+                    allTimes.push(i); <span class="hljs-comment">//pushes the index of the times onto an array that will be changed to a correct time later.</span>
+                    anyTimes = <span class="hljs-literal">true</span>;
+                }
+            }
+            <span class="hljs-keyword">if</span>(!anyTimes)
+            {
+                anyError = <span class="hljs-literal">true</span>;
+            }
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            anyError = <span class="hljs-literal">true</span>;
+        }
+      }
+      <span class="hljs-keyword">else</span>
+      {
+          anyError = <span class="hljs-literal">true</span>;
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>checks to make sure there is an Event Name, if there isn’t displays an error message</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span>(eventName == <span class="hljs-string">""</span>)
+      {
+          eventError.innerText = <span class="hljs-string">""</span> + message1;
+          anyError = <span class="hljs-literal">true</span>;
+      }<span class="hljs-keyword">else</span>
+      {
+          eventError.innerText = <span class="hljs-string">""</span>;
+      }
+
+      <span class="hljs-keyword">let</span> allEvents = storeManager.retrieveAll();
+
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i <span class="hljs-keyword">of</span> allEvents){
+        <span class="hljs-keyword">if</span>(i.eventName == eventName){
+          eventError.innerText = <span class="hljs-string">"Event name already exists. Please choose another name."</span>
+          anyError = <span class="hljs-literal">true</span>;
+          <span class="hljs-keyword">break</span>;
+        }<span class="hljs-keyword">else</span>{
+          eventError.innerText = <span class="hljs-string">""</span>
+        }
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>checks to see if the private checkbox is checked, if it is it checks to make sure the user input a password;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#privacy"</span>).checked)
+      {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>checks to make sure the user input a password, if they didn’t displays an error message</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#passwordInput"</span>).value==<span class="hljs-string">""</span>)
+          {
+              <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#passError"</span>).innerText = <span class="hljs-string">""</span> + message1;
+              anyError = <span class="hljs-literal">true</span>;
+          }
+          <span class="hljs-keyword">else</span>
+          {
+              <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#passError"</span>).innerText = <span class="hljs-string">""</span>;
+          }
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>if the checkbox is not checked make sure that the error message does not display any longer.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">else</span>
+      {
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#passError"</span>).innerText = <span class="hljs-string">""</span>;
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>if there are anyErrors (if any of the fields have problems) the bool “anyError” is set to true. and will the form will catch here until the user fixes the errors.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span>(anyError)
+      {
+          <span class="hljs-keyword">if</span>(!anyTimes)
+          {
+              stopSubmit.innerText = <span class="hljs-string">""</span> + message + <span class="hljs-string">" Select at least one time slot. "</span>
+          }
+          <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(!checkDate)
+          {
+            stopSubmit.innerText = <span class="hljs-string">""</span> + message + <span class="hljs-string">" Please select 'Select Time(s)' after entering a date. "</span>;
+          }
+          <span class="hljs-keyword">else</span>
+          {
+            stopSubmit.innerText = <span class="hljs-string">""</span> + message;
+          }
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>if all the fields are filled out correctly, clears the error messages, submitEvent() is a function that sends the event information to
+a class that is then stored in localstorage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">else</span>
+      {
+        stopSubmit.innerText = <span class="hljs-string">""</span>;
+        ev.submitEvent(eventName,storeManager.getCurrentAccount(),month,day,year,allTimes,passwordInput.value);<span class="hljs-comment">//this creates an event, and attempts to pass it to storageManager.</span>
+        clearAllFields();
+      }
+  })</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>@pre none
+@post makes sure that when the password box is not displayed the password input is cleared and an error message is not displayed.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  private.addEventListener(<span class="hljs-string">"click"</span>, (e) =&gt;{
+      <span class="hljs-keyword">if</span>(!private.checked)
+      {
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#passError"</span>).innerText = <span class="hljs-string">""</span>;
+          passwordInput.value = <span class="hljs-string">""</span>;
+      }
+  })</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p> @pre none though this is only called by submit button once the user has completed all fields correctly.
+ @post clears all the fields and tells the user that their event has been sccessfully submitted.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">clearAllFields</span>(<span class="hljs-params"></span>)
+  </span>{
+      eventMonth.value = <span class="hljs-string">""</span>;
+      eventDay.value = <span class="hljs-string">""</span>;
+      eventYear.value = <span class="hljs-string">""</span>;
+      eventName.value = <span class="hljs-string">""</span>;
+      <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#validate"</span>).click();
+      <span class="hljs-keyword">if</span>(private.checked)
+      {
+          private.checked = <span class="hljs-literal">false</span>;
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#passError"</span>).innerText = <span class="hljs-string">""</span>;
+          passwordInput.value = <span class="hljs-string">""</span>;
+          passwordInput.style.display = <span class="hljs-string">"none"</span>;
+          passwordText.style.display = <span class="hljs-string">"none"</span>;
+      }
+      checkDate = <span class="hljs-literal">false</span>;
+      <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#typeErrorMessage"</span>).innerText = <span class="hljs-string">""</span>;
+      <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#allComplete"</span>).innerText = <span class="hljs-string">"Successfully submited event"</span>;
+  }
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

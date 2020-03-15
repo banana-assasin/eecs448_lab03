@@ -1,0 +1,245 @@
+.head{
+  position: relative;
+  top: 50px;
+  text-align: center;
+  font: 48px arial, sans-serif;
+  color: #0B3948;
+}
+body{
+  font-family: Arial;
+  margin: 40px;
+  position: relative;
+  bottom: 40px;
+  background-color: #dddddd;
+}
+
+/* #buttonRow
+{
+  background-color: transparent !important;
+} */
+#Events, #Calendar, #joinedEvents, #createdEvents
+{
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+#Events td, #Events th, #Calendar td, #Calendar th, #joinedEvents th, #createdEvents th, #joinedEvents td, #createdEvents td
+{
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#eventTable
+{
+
+border: 3px solid black;
+
+  border-collapse: collapse;
+
+}
+
+#Events tr:nth-child(even), #joinedEvents tr:nth-child(even), #createdEvents tr:nth-child(even){background-color: #f2f2f2; }
+
+#Events tr:nth-child(odd), #joinedEvents tr:nth-child(odd), #createdEvents tr:nth-child(odd){background-color: #ffffff; }
+
+#Events tr:hover {background-color: #ddd;}
+
+
+#Events th, #Calendar th, #joinedEvents th, #createdEvents th
+{
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0B3948;
+  color: white;
+}
+
+#Events {
+  position:relative;
+  top:20px;
+}
+#Calendar th
+{
+  text-align: center;
+}
+
+#changeView, #timeChange {
+  background-color: #0B3948; /* Green background */
+  border: 1px solid black; /* Green border */
+  color: white; /* White text */
+  padding: 8px 20px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+#changeView:hover
+{
+  background-color: #0B3948;
+}
+
+#calendar td
+{
+  background-color: white;
+}
+
+#create, #manage, #join {
+  font: 18px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 40;
+  width: 180;
+}
+
+#usernameText, #passwordText {
+  font: 15px arial, sans-serif;
+}
+
+#login, #logout, #signup, #confirm, #cancel {
+  font: 15px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 30;
+  width: 79.5;
+}
+
+#confirm, #cancel {
+  height: 30;
+  width: 120;
+}
+
+#submit {
+  font: 20px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 50;
+  width: 100;
+}
+
+#navigation { 
+  position: relative;
+  text-align: center;
+  top: 120px;
+}
+
+#error {
+  position: relative;
+  top: 5px;
+}
+
+#loginWindow {
+  position: relative;
+  bottom: 80px;
+}
+
+input[id^="button"] {
+  font: 14px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 25;
+  width: 125;
+}
+
+input[value^="Submit"] {
+  position: relative;
+  left: 5px;
+}
+
+input[id^="edit"], input[id^="delete"], input[id^="viewUsers"], #addTime {
+  font: 14px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 25;
+  width: 125;
+}
+
+input[id^="Yesevent"], input[id^="Noevent"] {
+  font: 14px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 25;
+  width: 60;
+}
+
+input[id^="changeevent"], input[id^="leaveevent"] {
+  font: 14px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 25;
+  width: 150;
+}
+
+input[id^="closeTimeTable"], value[id^="Click Again"], #closeUserTable, {
+  font: 14px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 25;
+  width: 150;
+}
+
+#toHome
+{
+  top: 60px;
+  position: relative;
+  font: 15px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 30;
+  width: 150;
+}
+
+input[id^="deleteTime"] {
+  font: 14px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 25;
+  width: 100;
+}
+
+#calendarStuff {
+  position:relative;
+  top:20px;
+}
+
+#createdTitle, #joinedTitle, #forceLogIn
+{
+  font: 28px arial, sans-serif;
+  font-weight: bold;
+  color: #0B3948; 
+}
+
+#managing {
+  position: relative;
+  top: 40px;
+}
+
+/*the following border trick was taken from https://css-tricks.com/body-border/ */
+#top, #bottom, #left, #right {
+	background: #cccccc;
+	position: fixed;
+	z-index: 100;
+}
+#left, #right {
+	top: 0; bottom: 0;
+	width: 15px;
+}
+#left { left: 0; }
+#right { right: 0; }
+		
+#top, #bottom {
+	left: 0; right: 0;
+	height: 15px;
+}
+#top { top: 0; }
+#bottom { bottom: 0; }

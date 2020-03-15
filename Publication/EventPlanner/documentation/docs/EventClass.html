@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>EventClass.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="Event.html">
+                  Event.js
+                </a>
+              
+                
+                <a class="source" href="EventClass.html">
+                  EventClass.js
+                </a>
+              
+                
+                <a class="source" href="EventFunctions.html">
+                  EventFunctions.js
+                </a>
+              
+                
+                <a class="source" href="TimeTable.html">
+                  TimeTable.js
+                </a>
+              
+                
+                <a class="source" href="admin.html">
+                  admin.js
+                </a>
+              
+                
+                <a class="source" href="attendee.html">
+                  attendee.js
+                </a>
+              
+                
+                <a class="source" href="dummyFile.html">
+                  dummyFile.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="manager.html">
+                  manager.js
+                </a>
+              
+                
+                <a class="source" href="signup.html">
+                  signup.js
+                </a>
+              
+                
+                <a class="source" href="storageManager.html">
+                  storageManager.js
+                </a>
+              
+                
+                <a class="source" href="storageTest.html">
+                  storageTest.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>EventClass.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>EventList controls the #Events table on attendee.html It can also be used for the admins to see only their events later too.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EventList</span>
+</span>{
+  <span class="hljs-keyword">constructor</span>(eventDisplayer)
+  {
+    <span class="hljs-keyword">this</span>.eventDisplayer = eventDisplayer; <span class="hljs-comment">//EventDisplayer object - the table that holds specific times for a single event.</span>
+    <span class="hljs-keyword">this</span>.table = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>); <span class="hljs-comment">//the table that holds the list of all events.</span>
+    <span class="hljs-keyword">this</span>.destroyEvents(); <span class="hljs-comment">//ensure that the table starts empty</span>
+    <span class="hljs-keyword">this</span>.storageManager = <span class="hljs-keyword">new</span> StorageManager();
+    <span class="hljs-keyword">this</span>.eventArray = <span class="hljs-keyword">this</span>.storageManager.retrieveAll();
+    <span class="hljs-keyword">this</span>.checkNumberOfElements(); <span class="hljs-comment">//updates the value of this.numberOfEvents</span>
+    <span class="hljs-keyword">this</span>.present = <span class="hljs-literal">true</span>; <span class="hljs-comment">//this.present should be true when the table is visible, false if it isn't</span>
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Updates the value of this.numberOfEvents, the number of events that the table should display
+@pre none
+@post number of events on the table correctly refects the number of events in local storage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  checkNumberOfElements()
+  {
+    <span class="hljs-keyword">this</span>.numberOfEvents = <span class="hljs-keyword">this</span>.eventArray.length;
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>@post the Events table gets a header row with column labels</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  createHeader()
+  {
+    <span class="hljs-keyword">this</span>.table.insertRow(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">this</span>.table.rows[<span class="hljs-number">0</span>].innerHTML=<span class="hljs-string">"&lt;th&gt;Event Name&lt;/th&gt; &lt;th&gt;Date&lt;/th&gt; &lt;th&gt;Organizer&lt;/th&gt; &lt;th&gt;Number of Possible Attendees (Including the Author)&lt;/th&gt; &lt;th&gt;Public vs Private&lt;/th&gt; &lt;th&gt;Join?&lt;/th&gt;"</span>
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>@pre There should be a header before this is called
+@post Creates this.numberOfEvents new rows to #Events. These are then filled with events created by the user or the dummy file.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  createBody()
+  {
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i&lt;=<span class="hljs-keyword">this</span>.numberOfEvents;i++)
+    {
+      <span class="hljs-keyword">this</span>.table.insertRow(i);
+      <span class="hljs-keyword">this</span>.table.rows[i].insertCell(<span class="hljs-number">0</span>);
+      <span class="hljs-keyword">this</span>.table.rows[i].insertCell(<span class="hljs-number">1</span>);
+      <span class="hljs-keyword">this</span>.table.rows[i].insertCell(<span class="hljs-number">2</span>);
+      <span class="hljs-keyword">this</span>.table.rows[i].insertCell(<span class="hljs-number">3</span>);
+      <span class="hljs-keyword">this</span>.table.rows[i].insertCell(<span class="hljs-number">4</span>);
+      <span class="hljs-keyword">this</span>.table.rows[i].insertCell(<span class="hljs-number">5</span>);
+      <span class="hljs-keyword">this</span>.table.rows[i].cells[<span class="hljs-number">0</span>].innerText = <span class="hljs-keyword">this</span>.eventArray[i<span class="hljs-number">-1</span>].eventName;<span class="hljs-comment">//grabs the event name from local storage</span>
+      <span class="hljs-keyword">this</span>.table.rows[i].cells[<span class="hljs-number">1</span>].innerText = <span class="hljs-keyword">this</span>.eventArray[i<span class="hljs-number">-1</span>].getDateString(<span class="hljs-literal">true</span>);<span class="hljs-comment">//grabs the date from local storage with '/' in it</span>
+      <span class="hljs-keyword">this</span>.table.rows[i].cells[<span class="hljs-number">2</span>].innerText = <span class="hljs-keyword">this</span>.eventArray[i<span class="hljs-number">-1</span>].author;<span class="hljs-comment">//grabs the author name from local storage</span>
+      <span class="hljs-keyword">this</span>.table.rows[i].cells[<span class="hljs-number">3</span>].innerText = <span class="hljs-keyword">this</span>.eventArray[i<span class="hljs-number">-1</span>].getMaxAttendeeCount();<span class="hljs-comment">//grabs max number of attendees from local storage</span>
+      <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.eventArray[i<span class="hljs-number">-1</span>].password==<span class="hljs-string">""</span>)
+      {
+        <span class="hljs-keyword">this</span>.table.rows[i].cells[<span class="hljs-number">4</span>].innerText = <span class="hljs-string">"Public"</span>;
+      }
+      <span class="hljs-keyword">else</span>
+      {
+        <span class="hljs-keyword">this</span>.table.rows[i].cells[<span class="hljs-number">4</span>].innerText = <span class="hljs-string">"Private"</span>;
+      }
+
+      <span class="hljs-keyword">let</span> x = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"INPUT"</span>);
+
+      <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.table.rows[i].cells[<span class="hljs-number">4</span>].innerText==<span class="hljs-string">"Private"</span>)
+      {
+        <span class="hljs-keyword">let</span> y = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"INPUT"</span>);
+        y.setAttribute(<span class="hljs-string">"type"</span>, <span class="hljs-string">"text"</span>);
+        y.setAttribute(<span class="hljs-string">"id"</span>, <span class="hljs-string">"passwordInput"</span>+i);
+        <span class="hljs-keyword">this</span>.table.rows[i].cells[<span class="hljs-number">5</span>].innerText = <span class="hljs-string">"Password:   "</span>;
+        <span class="hljs-keyword">this</span>.table.rows[i].cells[<span class="hljs-number">5</span>].appendChild(y);
+        x.setAttribute(<span class="hljs-string">"type"</span>, <span class="hljs-string">"button"</span>);
+        x.setAttribute(<span class="hljs-string">"value"</span>, <span class="hljs-string">"Submit Password"</span>);
+        x.setAttribute(<span class="hljs-string">"id"</span>, <span class="hljs-string">"button"</span>+i)
+        <span class="hljs-keyword">this</span>.table.rows[i].cells[<span class="hljs-number">5</span>].appendChild(x); <span class="hljs-comment">//Moves the Join event button into the last cell in the row</span>
+      }<span class="hljs-keyword">else</span>{
+        <span class="hljs-keyword">let</span> x = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"INPUT"</span>); <span class="hljs-comment">//Creates a Join event button with dynamically created id</span>
+        x.setAttribute(<span class="hljs-string">"type"</span>, <span class="hljs-string">"button"</span>);
+        x.setAttribute(<span class="hljs-string">"value"</span>, <span class="hljs-string">"Select Event"</span>);
+        x.setAttribute(<span class="hljs-string">"id"</span>, <span class="hljs-string">"button"</span>+i)
+        <span class="hljs-keyword">this</span>.table.rows[i].cells[<span class="hljs-number">5</span>].appendChild(x); <span class="hljs-comment">//Moves the Join event button into the last cell in the row</span>
+      }
+
+    }
+    <span class="hljs-keyword">this</span>.buttonListeners(); <span class="hljs-comment">//Activates the eventListeners on all the created buttons</span>
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>@pre #Events is an empty table without rows
+@post #Events is filled with rows that display events (and dummy events)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  createTable()
+  {
+    <span class="hljs-keyword">this</span>.checkNumberOfElements();
+    <span class="hljs-keyword">this</span>.createHeader();
+    <span class="hljs-keyword">this</span>.createBody();
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>@pre none
+@post removes the event rows.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  destroyEvents()
+  {
+    <span class="hljs-keyword">while</span>(<span class="hljs-keyword">this</span>.table.firstChild)
+    {
+      <span class="hljs-keyword">this</span>.table.removeChild(<span class="hljs-keyword">this</span>.table.firstChild);
+    }
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>@pre The buttons must exist, ie createBody() has been run
+@post All the buttons have an event listener that calls eventDisplayer.place() when clicked. In addition, it activates the eventListeners for eventDisplayer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  buttonListeners()
+  {
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">1</span>;i&lt;=<span class="hljs-keyword">this</span>.numberOfEvents;i++)
+    {
+      <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#button"</span>+ i ).addEventListener(<span class="hljs-string">"click"</span>, ()=&gt;
+      {
+
+        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.eventDisplayer.present){
+          <span class="hljs-keyword">this</span>.eventDisplayer.remove();
+        }
+
+        <span class="hljs-keyword">this</span>.eventDisplayer.n = i+<span class="hljs-number">1</span>;
+
+        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.eventArray[i<span class="hljs-number">-1</span>].password != <span class="hljs-string">""</span>){<span class="hljs-comment">//checks to make sure the password is correct if the event is private</span>
+          <span class="hljs-keyword">let</span> table = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>);
+            <span class="hljs-keyword">let</span> passwordField = table.tBodies[<span class="hljs-number">0</span>].rows[<span class="hljs-keyword">this</span>.eventDisplayer.n<span class="hljs-number">-1</span>].cells[<span class="hljs-number">5</span>].children[<span class="hljs-number">0</span>].value;
+            <span class="hljs-keyword">if</span>(passwordField != <span class="hljs-keyword">this</span>.eventArray[i<span class="hljs-number">-1</span>].password){
+              <span class="hljs-keyword">this</span>.eventDisplayer.placeErrorMessage(<span class="hljs-string">"INCORRECT PASSWORD FOR THIS EVENT"</span>);
+            }<span class="hljs-keyword">else</span>{
+              <span class="hljs-keyword">this</span>.eventDisplayer.removeErrorMessage();
+              <span class="hljs-keyword">this</span>.eventDisplayer.event = <span class="hljs-keyword">this</span>.eventArray[i<span class="hljs-number">-1</span>];
+              <span class="hljs-keyword">this</span>.eventDisplayer.place();
+              <span class="hljs-keyword">this</span>.eventDisplayer.obtainEvent(<span class="hljs-keyword">this</span>.eventArray[i<span class="hljs-number">-1</span>]);
+            }
+        }<span class="hljs-keyword">else</span>{
+          <span class="hljs-keyword">this</span>.eventArray = <span class="hljs-keyword">this</span>.storageManager.retrieveAll();
+          <span class="hljs-keyword">this</span>.eventDisplayer.event = <span class="hljs-keyword">this</span>.eventArray[i<span class="hljs-number">-1</span>];
+          <span class="hljs-keyword">this</span>.eventDisplayer.place();
+          <span class="hljs-keyword">this</span>.eventDisplayer.obtainEvent(<span class="hljs-keyword">this</span>.eventArray[i<span class="hljs-number">-1</span>])
+        }
+
+        <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.eventDisplayer.listening)
+        {
+          <span class="hljs-keyword">this</span>.eventDisplayer.buttonListeners()
+        }
+      })
+    }
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p> @pre none
+ @post #Events no longer appears on the document.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  hide()
+  {
+    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>).style.display = <span class="hljs-string">"none"</span>;
+    <span class="hljs-keyword">this</span>.present = <span class="hljs-literal">false</span>;
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>@pre none
+@post #Events is displayed</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  find()
+  {
+    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>).style.display = <span class="hljs-string">"table"</span>;
+    <span class="hljs-keyword">this</span>.present = <span class="hljs-literal">true</span>;
+  }
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Controls the calendar in attendee.html</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Calendar</span>
+</span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>@pre none
+@post A calendar is created and hidden. The calendar is made inside of the table #Calendar.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">constructor</span>()
+  {
+    <span class="hljs-keyword">this</span>.calendar = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Calendar"</span>);
+    <span class="hljs-keyword">this</span>.destroyCalendar();
+    <span class="hljs-keyword">this</span>.month = [<span class="hljs-string">"January"</span>, <span class="hljs-string">"February"</span>, <span class="hljs-string">"March"</span>, <span class="hljs-string">"April"</span>, <span class="hljs-string">"May"</span>, <span class="hljs-string">"June"</span>, <span class="hljs-string">"July"</span>, <span class="hljs-string">"August"</span>, <span class="hljs-string">"September"</span>, <span class="hljs-string">"October"</span>,<span class="hljs-string">"November"</span>, <span class="hljs-string">"December"</span>];
+    <span class="hljs-keyword">this</span>.date = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+    <span class="hljs-keyword">this</span>.tempDate = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-keyword">this</span>.date.getFullYear(), <span class="hljs-keyword">this</span>.date.getMonth(), <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">this</span>.row = <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">this</span>.column = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">this</span>.currentDay = <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">this</span>.createCalendar();
+    <span class="hljs-keyword">this</span>.hide();
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>@pre The calendar is destroyed
+@post Creates the calendar’s rows and header. Calls upon createDays() to fill the cells with the numbers that should be there</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  createCalendar()
+  {
+    <span class="hljs-keyword">this</span>.calendar.insertRow(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">this</span>.calendar.rows[<span class="hljs-number">0</span>].innerHTML=<span class="hljs-string">"&lt;th id='Month' colspan=7&gt;&lt;button id ='previousMonth'&gt;Previous Month&lt;/button&gt; &lt;span id='monthDisplay'&gt;&lt;/span&gt; &lt;button id='nextMonth'&gt;Next Month&lt;/button&gt;&lt;/th&gt;"</span>;
+    <span class="hljs-keyword">this</span>.previous=<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#previousMonth"</span>);
+    <span class="hljs-keyword">this</span>.next = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#nextMonth"</span>);
+    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#monthDisplay"</span>).innerText=<span class="hljs-keyword">this</span>.month[<span class="hljs-keyword">this</span>.date.getMonth()] + <span class="hljs-string">" "</span> + <span class="hljs-keyword">this</span>.date.getFullYear();
+    <span class="hljs-keyword">this</span>.calendar.insertRow(<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">this</span>.calendar.rows[<span class="hljs-number">1</span>].innerHTML=<span class="hljs-string">"&lt;th&gt;Sunday&lt;/th&gt; &lt;th&gt;Monday&lt;/th&gt; &lt;th&gt;Tuesday&lt;/th&gt; &lt;th&gt;Wednesday&lt;/th&gt; &lt;th&gt;Thursday&lt;/th&gt; &lt;th&gt;Friday&lt;/th&gt; &lt;th&gt;Saturday&lt;/th&gt;"</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">2</span>;i&lt;=<span class="hljs-number">7</span>;i++)
+    {
+      <span class="hljs-keyword">this</span>.calendar.insertRow(i);
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = <span class="hljs-number">0</span>;j&lt;<span class="hljs-number">7</span>;j++)
+      {
+        <span class="hljs-keyword">this</span>.calendar.rows[i].insertCell(j);
+      }
+    }
+    <span class="hljs-keyword">this</span>.calendar.rows[<span class="hljs-number">7</span>].style.height=<span class="hljs-string">"36px"</span>;
+    <span class="hljs-keyword">this</span>.createDays();
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p> @pre The rows must already be in place
+ @post Fills in the cells of the table with numbers to make a real valid calendar.
+ Note - Currently the only way to change the month requires deleting and recreating the calendar.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  createDays()
+  {
+    <span class="hljs-keyword">this</span>.currentDay=<span class="hljs-number">2</span>
+    <span class="hljs-keyword">this</span>.row=<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">this</span>.col=<span class="hljs-number">0</span>;
+    <span class="hljs-keyword">this</span>.tempDate.setFullYear(<span class="hljs-keyword">this</span>.date.getFullYear(), <span class="hljs-keyword">this</span>.date.getMonth(), <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">while</span>(<span class="hljs-keyword">this</span>.tempDate.getMonth() == <span class="hljs-keyword">this</span>.date.getMonth())
+    {
+      <span class="hljs-keyword">this</span>.col = <span class="hljs-keyword">this</span>.tempDate.getDay();
+      <span class="hljs-keyword">this</span>.calendar.rows[<span class="hljs-keyword">this</span>.row].cells[<span class="hljs-keyword">this</span>.col].innerText = <span class="hljs-keyword">this</span>.tempDate.getDate();
+      <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.tempDate.getDay()==<span class="hljs-number">6</span>)
+      {
+        <span class="hljs-keyword">this</span>.row = <span class="hljs-keyword">this</span>.row+<span class="hljs-number">1</span>;
+      }
+      <span class="hljs-keyword">this</span>.tempDate.setDate(<span class="hljs-keyword">this</span>.currentDay);
+      <span class="hljs-keyword">this</span>.currentDay = <span class="hljs-keyword">this</span>.currentDay + <span class="hljs-number">1</span>;
+    }
+    <span class="hljs-keyword">if</span>((<span class="hljs-keyword">this</span>.row == <span class="hljs-number">7</span> &amp;&amp; <span class="hljs-keyword">this</span>.col == <span class="hljs-number">6</span>) || <span class="hljs-keyword">this</span>.row &lt; <span class="hljs-number">7</span>)
+    {
+      <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Calendar"</span>).rows[<span class="hljs-number">7</span>].remove();
+    }
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p> @pre none
+ @post destroys the calendar.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  destroyCalendar()
+  {
+    <span class="hljs-keyword">while</span>(<span class="hljs-keyword">this</span>.calendar.firstChild)
+    {
+      <span class="hljs-keyword">this</span>.calendar.removeChild(<span class="hljs-keyword">this</span>.calendar.firstChild);
+    }
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p> @pre none
+ @post #Calendar is no longer displayed.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>hide()
+  {
+    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Calendar"</span>).style.display = <span class="hljs-string">"none"</span>;
+    <span class="hljs-keyword">this</span>.present = <span class="hljs-literal">false</span>;
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p> @pre none
+ @post #Calendar is once again displayed on the DOM</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  find()
+  {
+    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Calendar"</span>).style.display = <span class="hljs-string">"table"</span>;
+    <span class="hljs-keyword">this</span>.present = <span class="hljs-literal">true</span>;
+  }
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Controls the Small table that displays one individual event. When displayed it will sit inside of a cell that spans an entire row in #Events</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EventDisplayer</span>
+</span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p> @pre None
+ @post The table is created and then hidden. In addition the buttons inside the table are tracked before they are removed so that adding an eventListener never fails</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">constructor</span>()
+  {
+    <span class="hljs-keyword">this</span>.present = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">this</span>.n = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">this</span>.listening = <span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">this</span>.createTable();
+    <span class="hljs-keyword">this</span>.confirm = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#confirm"</span>);
+    <span class="hljs-keyword">this</span>.cancel = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#cancel"</span>);
+    <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#joinedEvents"</span>))
+    {
+      <span class="hljs-keyword">this</span>.remove()
+    }
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>@pre The table doesnt already exist
+@post The table is created with Header cells in the leftmost column and buttons to submit the changes or cancel them.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  createTable() <span class="hljs-comment">// n = the row of eventList whose button was pressed.</span>
+  {
+    <span class="hljs-keyword">this</span>.eventTable = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#eventTable"</span>);
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>;i&lt;<span class="hljs-number">4</span>;i++)
+    {
+      <span class="hljs-keyword">this</span>.eventTable.insertRow(i);
+    }
+    <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">0</span>].innerHTML = <span class="hljs-string">"&lt;th&gt;Time&lt;/th&gt;"</span>;
+    <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">1</span>].innerHTML = <span class="hljs-string">"&lt;th&gt;Number Attending&lt;/th&gt;"</span>;
+    <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">2</span>].innerHTML = <span class="hljs-string">"&lt;th&gt;Join This Time?&lt;/th&gt;"</span>;
+    <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">3</span>].setAttribute(<span class="hljs-string">"id"</span>, <span class="hljs-string">"buttonRow"</span>);
+    <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">3</span>].insertCell(<span class="hljs-number">0</span>);
+    <span class="hljs-comment">/*this.eventTable.rows[4].insertCell(0);*/</span>
+    <span class="hljs-keyword">let</span> x = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"INPUT"</span>);
+    x.setAttribute(<span class="hljs-string">"id"</span>, <span class="hljs-string">"confirm"</span>);
+    x.setAttribute(<span class="hljs-string">"type"</span>, <span class="hljs-string">"button"</span>);
+    x.setAttribute(<span class="hljs-string">"value"</span>, <span class="hljs-string">"Apply"</span>);
+    <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">3</span>].cells[<span class="hljs-number">0</span>].appendChild(x);<span class="hljs-comment">//adding a confirm or "apply" button</span>
+    x = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"INPUT"</span>);
+    x.setAttribute(<span class="hljs-string">"id"</span>, <span class="hljs-string">"cancel"</span>);
+    x.setAttribute(<span class="hljs-string">"type"</span>, <span class="hljs-string">"button"</span>);
+    x.setAttribute(<span class="hljs-string">"value"</span>, <span class="hljs-string">"Cancel / Close"</span>);
+    <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">3</span>].cells[<span class="hljs-number">0</span>].appendChild(x);<span class="hljs-comment">//adding a cancel or close button.</span>
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>@pre None
+@post Destroys the table. Not currently necessary</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  destroyTable()
+  {
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.present)
+    {
+      <span class="hljs-keyword">let</span> listTable = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>);
+      <span class="hljs-keyword">this</span>.present = <span class="hljs-literal">false</span>;
+      listTable.deleteRow(<span class="hljs-keyword">this</span>.n);
+    }
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p> @pre None
+ @post Adds event listeners to the confirm and cancel buttons.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  buttonListeners()
+  {
+    <span class="hljs-keyword">this</span>.listening = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">this</span>.confirm.addEventListener(<span class="hljs-string">"click"</span>, ()=&gt;{<span class="hljs-keyword">this</span>.addUser();<span class="hljs-keyword">this</span>.listening = <span class="hljs-literal">true</span>;}); <span class="hljs-comment">//temporary</span>
+    <span class="hljs-keyword">this</span>.cancel.addEventListener(<span class="hljs-string">"click"</span>, () =&gt; {<span class="hljs-keyword">this</span>.remove();<span class="hljs-keyword">this</span>.listening = <span class="hljs-literal">false</span>;});
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>@pre None
+@post removes the Table from the DOM.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  remove()
+  {
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.present)
+    {
+      <span class="hljs-keyword">this</span>.eventTable.remove();
+      <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>))
+      {
+        <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>).deleteRow(<span class="hljs-keyword">this</span>.n);
+      }
+      <span class="hljs-keyword">else</span>
+      {
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#No"</span>+joinedEvents.currentEventNum))
+        {
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#No"</span>+joinedEvents.currentEventNum).click();
+        }
+        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.n != <span class="hljs-number">-1</span>)
+        {
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#joinedEvents"</span>).deleteRow(<span class="hljs-keyword">this</span>.n);
+        }
+      }
+      <span class="hljs-keyword">this</span>.present = <span class="hljs-literal">false</span>;
+      <span class="hljs-comment">/*this.eventTable.rows[4].cells[0].innerText = "";*/</span>
+    }
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>@pre none.
+@post places the table into a newly created row in #Events.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  place() <span class="hljs-comment">//places the table in the this.n th row</span>
+  {
+    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>))
+    {
+      <span class="hljs-keyword">this</span>.listTable = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>);
+    }
+    <span class="hljs-keyword">else</span>
+    {
+      <span class="hljs-keyword">this</span>.listTable = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#joinedEvents"</span>);
+    }
+    <span class="hljs-keyword">this</span>.listTable.insertRow(<span class="hljs-keyword">this</span>.n);
+    <span class="hljs-keyword">this</span>.listTable.rows[<span class="hljs-keyword">this</span>.n].innerHTML = <span class="hljs-string">"&lt;td colspan = 6&gt;&lt;/td&gt;"</span>;
+    <span class="hljs-keyword">this</span>.listTable.rows[<span class="hljs-keyword">this</span>.n].cells[<span class="hljs-number">0</span>].appendChild(<span class="hljs-keyword">this</span>.eventTable);
+    <span class="hljs-keyword">this</span>.present = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>])
+    {
+      <span class="hljs-keyword">this</span>.eventTable.deleteRow(<span class="hljs-number">4</span>);
+    }
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>presents an error message to the user when something goes wrong</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  placeErrorMessage(message){
+    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>))
+    {
+      <span class="hljs-keyword">this</span>.listTable = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>);
+    }
+    <span class="hljs-keyword">else</span>
+    {
+      <span class="hljs-keyword">this</span>.listTable = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#joinedEvents"</span>);
+    }
+    <span class="hljs-keyword">this</span>.listTable.insertRow(<span class="hljs-keyword">this</span>.n);
+    <span class="hljs-keyword">this</span>.listTable.rows[<span class="hljs-keyword">this</span>.n].innerHTML = <span class="hljs-string">"&lt;td colspan = 6&gt;&lt;/td&gt;"</span>;
+    <span class="hljs-keyword">this</span>.listTable.rows[<span class="hljs-keyword">this</span>.n].cells[<span class="hljs-number">0</span>].innerText = message;
+    <span class="hljs-keyword">this</span>.present = <span class="hljs-literal">true</span>;
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>removes the error message when the error is resolved</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  removeErrorMessage(){
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.present){
+      <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.document.querySelector(<span class="hljs-string">"#Events"</span>))
+      {
+        <span class="hljs-keyword">this</span>.listTable = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>).deleteRow(<span class="hljs-keyword">this</span>.n);
+      }
+      <span class="hljs-keyword">else</span>
+      {
+        <span class="hljs-keyword">this</span>.listTable = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#joinedEvents"</span>).deleteRow(<span class="hljs-keyword">this</span>.n);
+      }
+      <span class="hljs-keyword">this</span>.present = <span class="hljs-literal">false</span>;
+    }
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>@pre called when a join event button is pressed
+@variable event - an event object passed in from eventList
+@post sets the current event so its info can be extracted and displayed</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  obtainEvent(event)
+  {
+    <span class="hljs-keyword">this</span>.event = event;
+    <span class="hljs-keyword">let</span> sm = <span class="hljs-keyword">new</span> StorageManager();
+    <span class="hljs-keyword">let</span> myAccount = sm.getCurrentAccount();
+
+    <span class="hljs-keyword">while</span>(<span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">0</span>].cells[<span class="hljs-number">1</span>])
+    {
+      <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">0</span>].removeChild(<span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">0</span>].cells[<span class="hljs-number">1</span>]);
+      <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">1</span>].removeChild(<span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">1</span>].cells[<span class="hljs-number">1</span>]);
+      <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">2</span>].removeChild(<span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">2</span>].cells[<span class="hljs-number">1</span>]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>this.eventTable.rows[4].removeChild(this.eventTable.rows[4].cells[1]);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    }
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>])
+    {
+      <span class="hljs-keyword">this</span>.eventTable.deleteRow(<span class="hljs-number">4</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>this for loop adds all of the times selected by the creator to the table that the attendees can see as well as the rows, cells, and selection checkboxes that go along with that. It also takes into account if the user has selected to view times in a specific mode.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">1</span>;i&lt;=<span class="hljs-keyword">this</span>.event.times.length;i++)
+    {
+      <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">0</span>].insertCell(i);
+      <span class="hljs-keyword">if</span>(timeMode)
+      {
+        <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">0</span>].cells[i].innerText = event.times[i<span class="hljs-number">-1</span>];
+      }
+      <span class="hljs-keyword">else</span>
+      {
+        <span class="hljs-keyword">let</span> ampm = event.times[i<span class="hljs-number">-1</span>];
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">parseInt</span>(ampm)&lt;=<span class="hljs-number">12</span>)
+        {
+          <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">0</span>].cells[i].innerText = ampm + <span class="hljs-string">" a.m."</span>;
+        }
+        <span class="hljs-keyword">else</span>
+        {
+          ampm = ampm.substr(<span class="hljs-number">2</span>);
+          ampm = <span class="hljs-built_in">parseInt</span>(event.times[i<span class="hljs-number">-1</span>])<span class="hljs-number">-12</span> + ampm + <span class="hljs-string">" p.m."</span>;
+          <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">0</span>].cells[i].innerText = ampm;
+        }
+
+      }
+      <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">1</span>].insertCell(i);
+      <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">1</span>].cells[i].innerText = <span class="hljs-keyword">this</span>.event.getAttendeeByTime(<span class="hljs-keyword">this</span>.event.times[i<span class="hljs-number">-1</span>]);<span class="hljs-comment">//Dont know how thisll happen yet.</span>
+      <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">2</span>].insertCell(i);
+      <span class="hljs-comment">/*this.eventTable.rows[4].insertCell(i);*/</span>
+      <span class="hljs-keyword">let</span> x=<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"INPUT"</span>);
+      x.setAttribute(<span class="hljs-string">"type"</span>, <span class="hljs-string">"checkbox"</span>);
+      x.setAttribute(<span class="hljs-string">"id"</span>, <span class="hljs-string">"checkBox"</span>+i);
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j <span class="hljs-keyword">of</span> event.attendees)
+      {
+        <span class="hljs-keyword">if</span>(j.userName==sm.getCurrentAccount()&amp;&amp;j.checkTime(event.times[i<span class="hljs-number">-1</span>]))
+        {
+          x.checked = <span class="hljs-literal">true</span>;
+        }
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>lets the user click anywhere inside of the cell instead of having to click specifically inside of the checkbox.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">2</span>].cells[i].addEventListener(<span class="hljs-string">"click"</span>, () =&gt;{
+        <span class="hljs-keyword">if</span>(x.checked)
+        {
+          x.checked = <span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-keyword">else</span>
+        {
+          x.checked = <span class="hljs-literal">true</span>;
+        }
+      })
+      x.addEventListener(<span class="hljs-string">"click"</span>, () =&gt; {
+        <span class="hljs-keyword">if</span>(x.checked)
+        {
+          x.checked = <span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-keyword">else</span>
+        {
+          x.checked = <span class="hljs-literal">true</span>;
+        }
+      })
+      <span class="hljs-keyword">if</span>(myAccount == <span class="hljs-keyword">this</span>.event.author)
+      {
+        x.checked = <span class="hljs-literal">true</span>;
+        x.addEventListener(<span class="hljs-string">"click"</span>, () =&gt; {x.checked = !x.checked});
+      }
+      <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">2</span>].cells[i].appendChild(x);
+    }
+
+
+    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#buttonRow"</span>))
+    {
+      <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#buttonRow"</span>).cells[<span class="hljs-number">0</span>].setAttribute(<span class="hljs-string">"colspan"</span>, <span class="hljs-keyword">this</span>.event.times.length+<span class="hljs-number">1</span>);
+    }
+    <span class="hljs-comment">/*this.eventTable.rows[4].cells[0].setAttribute("colspan", this.event.times.length+1)*/</span>
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>this function allows users to add themselves to events. If they haven’t logged in it will output an error message and ask them to log in before joining events.
+if they are logged in it stores their selected times and links it to the event that they have elected to join.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  addUser(){
+
+    <span class="hljs-keyword">let</span> sm = <span class="hljs-keyword">new</span> StorageManager();
+    <span class="hljs-keyword">let</span> userName = sm.getCurrentAccount();
+
+    <span class="hljs-keyword">if</span>(userName == <span class="hljs-string">""</span>){
+      <span class="hljs-keyword">this</span>.eventTable.insertRow(<span class="hljs-number">4</span>);
+      <span class="hljs-keyword">this</span>.eventTable.insertCell(<span class="hljs-number">0</span>);
+      <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].cells[<span class="hljs-number">0</span>].innerText = <span class="hljs-string">"We don't know your name! Please log in to join event."</span>;
+      <span class="hljs-keyword">return</span>;
+    }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(userName == <span class="hljs-keyword">this</span>.event.author){
+      <span class="hljs-keyword">this</span>.eventTable.insertRow(<span class="hljs-number">4</span>);
+      <span class="hljs-keyword">this</span>.eventTable.insertCell(<span class="hljs-number">0</span>);
+      <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].cells[<span class="hljs-number">0</span>].innerText = <span class="hljs-string">"You are the creator of this event, to change times please go to Manage Events."</span>;
+      <span class="hljs-keyword">return</span>;
+    }<span class="hljs-keyword">else</span>{
+      <span class="hljs-comment">/*this.eventTable.rows[4].cells[0].innerText = "";*/</span>
+    }
+
+
+    <span class="hljs-keyword">let</span> eventArray = sm.retrieveAll();
+    <span class="hljs-keyword">let</span> timesSelected = [];
+    <span class="hljs-keyword">let</span> selectedABox = <span class="hljs-literal">false</span>;
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> e <span class="hljs-keyword">of</span> eventArray){
+      <span class="hljs-keyword">if</span>(e.eventName == <span class="hljs-keyword">this</span>.event.eventName){
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = <span class="hljs-number">1</span>; j&lt;= <span class="hljs-keyword">this</span>.event.times.length; j++){
+          <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">2</span>].cells[j].children[<span class="hljs-number">0</span>].checked){
+            selectedABox = <span class="hljs-literal">true</span>;
+            timesSelected.push(<span class="hljs-keyword">this</span>.event.times[j<span class="hljs-number">-1</span>]);
+          }
+        }
+        <span class="hljs-keyword">let</span> userObject = <span class="hljs-keyword">new</span> User(userName, timesSelected);
+        <span class="hljs-keyword">if</span>(selectedABox){
+          e.addUser(userObject);
+          <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>])
+          {
+            <span class="hljs-keyword">this</span>.eventTable.insertRow(<span class="hljs-number">4</span>);
+            <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].insertCell(<span class="hljs-number">0</span>);
+            <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].cells[<span class="hljs-number">0</span>].setAttribute(<span class="hljs-string">"colspan"</span>,<span class="hljs-keyword">this</span>.event.times.length+<span class="hljs-number">1</span>)
+          }
+          <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].cells[<span class="hljs-number">0</span>].innerText = <span class="hljs-string">"Successfully added/updated time(s) available for event. You are a part of this event."</span>;
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#joinedEvents"</span>))
+        {
+          <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>])
+          {
+            <span class="hljs-keyword">this</span>.eventTable.insertRow(<span class="hljs-number">4</span>);
+            <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].insertCell(<span class="hljs-number">0</span>);
+            <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].cells[<span class="hljs-number">0</span>].setAttribute(<span class="hljs-string">"colspan"</span>,<span class="hljs-keyword">this</span>.event.times.length+<span class="hljs-number">1</span>)
+          }
+          <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].cells[<span class="hljs-number">0</span>].innerText = <span class="hljs-string">"Changes not saved. If you would like to leave an event please us the leave event button."</span>;
+        }
+        <span class="hljs-keyword">else</span>{
+          <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> a <span class="hljs-keyword">of</span> e.attendees){
+            <span class="hljs-keyword">if</span>(a.userName == userObject.userName){
+              e.removeUser(a.userName);
+            }
+          }
+          <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>])
+          {
+            <span class="hljs-keyword">this</span>.eventTable.insertRow(<span class="hljs-number">4</span>);
+            <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].insertCell(<span class="hljs-number">0</span>);
+            <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].cells[<span class="hljs-number">0</span>].setAttribute(<span class="hljs-string">"colspan"</span>,<span class="hljs-keyword">this</span>.event.times.length+<span class="hljs-number">1</span>)
+          }
+          <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].cells[<span class="hljs-number">0</span>].innerText = <span class="hljs-string">"You selected no times so you are NOT a part of this event."</span>;
+          <span class="hljs-comment">/*if(document.querySelector("#joinedEvents"))
+          {
+            joinedEvents.leaveEvent(joinedEvents.currentEventNum);
+          }*/</span>
+
+        }
+        sm.storeEvent(e);
+      }
+    }
+    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>))
+    {
+      <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#Events"</span>).rows[(<span class="hljs-keyword">this</span>.n)<span class="hljs-number">-1</span>].cells[<span class="hljs-number">3</span>].innerText = eventArray[<span class="hljs-keyword">this</span>.n<span class="hljs-number">-2</span>].getMaxAttendeeCount();
+    }
+    <span class="hljs-keyword">this</span>.event = sm.retrieveEvent(sm.getEventId(<span class="hljs-keyword">this</span>.event.eventName));
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> e =<span class="hljs-number">0</span>;e&lt; <span class="hljs-keyword">this</span>.event.times.length;e++)
+    {
+      <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">1</span>].cells[e+<span class="hljs-number">1</span>].innerText = <span class="hljs-keyword">this</span>.event.getAttendeeByTime(<span class="hljs-keyword">this</span>.event.times[e]);<span class="hljs-comment">//Dont know how thisll happen yet.</span>
+    }
+
+  }
+}</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

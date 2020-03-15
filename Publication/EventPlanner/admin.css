@@ -1,0 +1,199 @@
+.head{
+  position: relative;
+  top: 50px;
+  text-align: center;
+  font: 48px arial, sans-serif;
+  color: #0B3948;
+}
+#loginWindow{
+  position: relative
+}
+body{
+  font-family: Arial;
+  margin: 40px;
+  position: relative;
+  bottom: 40px;
+  background-color: #dddddd;
+}
+#toHome
+{
+  top: 60px;
+  position: relative;
+  font: 15px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 30;
+  width: 150;
+}
+.loginWindow{
+  border: 1px
+  overflow: hidden
+}
+
+.imgcenter{
+  float: left
+  margin: 10px auto 20px;
+  display: block;
+}/*https://html-online.com/articles/image-align-center/*/
+
+.center {
+  max-width: 700px;
+  margin: auto;
+}/*copied https://www.w3schools.com/howto/howto_css_center_website.asps */
+
+
+#notLoggedInAdmin{
+  font: 28px arial, sans-serif;
+  font-weight: bold;
+  color: #0B3948;
+}
+#logout{
+  font: 15px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 30;
+  width: 79.5;
+}
+#validate
+{
+
+  font: 18px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 40;
+  width: 180;
+
+}
+#navigation {
+  position: relative;
+  text-align: center;
+  top: 120px;
+}
+#submit
+{
+
+  height: 50;
+  width: 250;
+  font: 18px arial, sans-serif;
+  background-color: #0B3948;
+  border-color: #EFF0F2;
+  color: #EFF0F2;
+  height: 40;
+  width: 180;
+}
+  #TimeTable
+  {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    align:center;
+    width: 100%;
+
+
+  }
+
+  #TimeTable td + td:nth-child(odd)
+  {
+    border-left: 40px solid #dddddd;
+  }
+  #TimeTable td, #TimeTable th
+  {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  #TimeTable tr:nth-child(even){background-color: #f2f2f2;}
+
+  #TimeTable tr:nth-child(odd){background-color: #f5ceb5;}
+
+  #TimeTable tr:hover {background-color: #a8a8a8;}
+
+  #TimeTable th
+  {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #6E1818;
+    color: white;
+  }
+
+  #TimeTable th + th:nth-Child(odd)
+  {
+
+    border-left:40px solid #dddddd;
+
+  }
+  #toAttendee, #toManager{
+
+
+    font: 18px arial, sans-serif;
+    background-color: #0B3948;
+    border-color: #EFF0F2;
+    color: #EFF0F2;
+    height: 40;
+    width: 180;
+
+  }
+
+/* CSS copied from https://www.w3schools.com/css/css_table.asp */
+
+  .btn-group button {
+      background-color: #6E1818; /* Black background */
+      border: 1px solid black; /* Black border */
+      color: white; /* White text */
+      padding: 8px 20px; /* Some padding */
+      cursor: pointer; /* Pointer/hand icon */
+      float: left; /* Float the buttons side by side */
+      text-align: left;
+  }
+
+
+  /* Clear floats (clearfix hack) */
+  .btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  .btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+  }
+
+  /* Add a background color on hover */
+  .btn-group button:hover {
+    background-color: #828282;
+  }
+  .grid-container
+  {
+    display: grid;
+    grid-template-columns: auto auto;
+    text-align: left;
+  }
+  .gridText
+  {
+    text-align: right;
+    padding-right: 5px;
+    padding-top: 5px;
+  }
+  /*the following border trick was taken from https://css-tricks.com/body-border/ */
+
+  #top, #bottom, #left, #right {
+  	background: #cccccc;
+  	position: fixed;
+  	z-index: 100;
+  }
+  #left, #right {
+  	top: 0; bottom: 0;
+  	width: 15px;
+  }
+  #left { left: 0; }
+  #right { right: 0; }
+
+  #top, #bottom {
+  	left: 0; right: 0;
+  	height: 15px;
+  }
+  #top { top: 0; }
+  #bottom { bottom: 0; }
+/** CSS copied from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_button_group */

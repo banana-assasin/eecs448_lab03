@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>EventFunctions.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="Event.html">
+                  Event.js
+                </a>
+              
+                
+                <a class="source" href="EventClass.html">
+                  EventClass.js
+                </a>
+              
+                
+                <a class="source" href="EventFunctions.html">
+                  EventFunctions.js
+                </a>
+              
+                
+                <a class="source" href="TimeTable.html">
+                  TimeTable.js
+                </a>
+              
+                
+                <a class="source" href="admin.html">
+                  admin.js
+                </a>
+              
+                
+                <a class="source" href="attendee.html">
+                  attendee.js
+                </a>
+              
+                
+                <a class="source" href="dummyFile.html">
+                  dummyFile.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="manager.html">
+                  manager.js
+                </a>
+              
+                
+                <a class="source" href="signup.html">
+                  signup.js
+                </a>
+              
+                
+                <a class="source" href="storageManager.html">
+                  storageManager.js
+                </a>
+              
+                
+                <a class="source" href="storageTest.html">
+                  storageTest.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>EventFunctions.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EventFunctions</span></span>{
+
+      <span class="hljs-keyword">constructor</span>(){<span class="hljs-keyword">this</span>.validDateNum = <span class="hljs-literal">true</span>;}
+
+      clientOfClassValidateEverything(day, month, year){
+        <span class="hljs-keyword">this</span>.validateDateNumbers(day,month,year)
+        <span class="hljs-keyword">this</span>.validateMonth(month)
+        <span class="hljs-keyword">this</span>.validateYear(year,month,day)
+        <span class="hljs-keyword">this</span>.validateDay(day,month)
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>this functions checks to make sure that the user didn’t input something that is Not a Number or “NaN”, it will output an error message
+if the user gives a non-number to the function.
+e.g. month: abc day:def year:ghij
+this function does use parseInt though, so if the user puts in something like 02a it will only grab the number portion.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      validateDateNumbers(day, month, year)
+      {
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isNaN</span>(day) || <span class="hljs-built_in">isNaN</span>(month) || <span class="hljs-built_in">isNaN</span>(year))
+        {
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#TypeErrorMessage"</span>).innerText = <span class="hljs-string">"All inputs must be numbers. "</span>;
+          <span class="hljs-keyword">this</span>.validDateNum = <span class="hljs-literal">false</span>;
+        }<span class="hljs-keyword">else</span>{
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#TypeErrorMessage"</span>).innerText = <span class="hljs-string">""</span>;
+          <span class="hljs-keyword">this</span>.validDateNum = <span class="hljs-literal">true</span>;
+        }
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>this function validates the month to make sure that the user has input a month number between 1 and 12. It will output an error if the user tries to select an invalid month</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      validateMonth(month)
+      {
+        <span class="hljs-keyword">if</span>(month &lt; <span class="hljs-number">1</span> || month &gt; <span class="hljs-number">12</span>)
+        {
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#MonthErrorMessage"</span>).innerText = <span class="hljs-string">"Month must be between 1 and 12; "</span>;
+        }<span class="hljs-keyword">else</span>{
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#MonthErrorMessage"</span>).innerText = <span class="hljs-string">""</span>;
+        }
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>This function validates the day using the month to make sure that the user has input a valid day for the month they have chosen.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      validateDay(day, month){
+
+        <span class="hljs-keyword">if</span>(day &lt; <span class="hljs-number">1</span> || day &gt; <span class="hljs-number">31</span>)
+        {
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">"Day must be between 1 and 31; "</span>;
+        }
+        <span class="hljs-keyword">if</span>(month == <span class="hljs-number">3</span> || month == <span class="hljs-number">5</span> || month == <span class="hljs-number">8</span> || month == <span class="hljs-number">10</span>)
+        {
+          <span class="hljs-keyword">if</span>(day &lt; <span class="hljs-number">1</span> || day &gt; <span class="hljs-number">31</span>)
+          {
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">"Day must be between 1 and 31; "</span>;
+          }
+          <span class="hljs-keyword">else</span>{
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">""</span>;
+          }
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(month == <span class="hljs-number">4</span> || month == <span class="hljs-number">6</span> || month == <span class="hljs-number">9</span> || month == <span class="hljs-number">11</span>)
+        {
+          <span class="hljs-keyword">if</span>(day &lt; <span class="hljs-number">1</span> || day &gt; <span class="hljs-number">30</span>)
+          {
+
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">"Day must be between 1 and 30; "</span>;
+          }
+          <span class="hljs-keyword">else</span>{
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">""</span>;}
+
+        }
+
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(month == <span class="hljs-number">1</span>)
+        {
+          <span class="hljs-keyword">if</span>(day == <span class="hljs-number">1</span>)
+          {
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">"Cannot make events on this date. It is holiday or special day. "</span>;
+          }
+          <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(day &lt; <span class="hljs-number">2</span> || day &gt; <span class="hljs-number">31</span>)
+          {
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">"Day must be between 1 and 31; "</span>;
+          }    <span class="hljs-keyword">else</span>{
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">""</span>;}
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(month == <span class="hljs-number">7</span>)
+        {
+          <span class="hljs-keyword">if</span>(day == <span class="hljs-number">4</span>)
+          {
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">"Cannot make events on this date. It is holiday or special day. "</span>;
+          }
+          <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(day &lt; <span class="hljs-number">1</span> || day &gt; <span class="hljs-number">31</span>)
+          {
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">"Day must be between 1 and 31; "</span>;
+          }    <span class="hljs-keyword">else</span>{
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">""</span>;}
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(month == <span class="hljs-number">12</span>)
+        {
+          <span class="hljs-keyword">if</span>(day == <span class="hljs-number">25</span>)
+          {
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">"Cannot make events on this date. It is holiday or special day. "</span>;
+          }
+          <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(day &lt; <span class="hljs-number">1</span> || day &gt; <span class="hljs-number">31</span>)
+          {
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">"Day must be between 1 and 31; "</span>;
+          }    <span class="hljs-keyword">else</span>{
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">""</span>;}
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(month == <span class="hljs-number">2</span>)
+        {
+          <span class="hljs-keyword">if</span>(day &lt; <span class="hljs-number">1</span> || day &gt; <span class="hljs-number">29</span>)
+          {
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">"Day must be between 1 and 29; "</span>;
+          }    <span class="hljs-keyword">else</span>{
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText = <span class="hljs-string">""</span>;}
+        }
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>checks to make sure that the year is between the arbitrary values of 1965 and 3000, soft-checks for leap years, but doesn’t account for the strange leap-year stuff where it isn’t actually ever 4 years.
+also checks to make sure that if the user has input Feb. 29, that the year they selected is a leap year.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      validateYear(year, month, day)
+      {
+        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.validDateNum)
+        {
+        <span class="hljs-keyword">if</span>(!(year &gt; <span class="hljs-number">3000</span>) &amp;&amp; !(year &lt; <span class="hljs-number">1965</span>))
+        {
+          <span class="hljs-keyword">if</span>(month == <span class="hljs-number">2</span> &amp;&amp; day == <span class="hljs-number">29</span>)
+          {
+            <span class="hljs-keyword">if</span>(year % <span class="hljs-number">4</span> != <span class="hljs-number">0</span>)
+            {
+              <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#YearErrorMessage"</span>).innerText = <span class="hljs-string">"Year input not a leap year; "</span>;
+
+            } <span class="hljs-keyword">else</span>{
+              <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#YearErrorMessage"</span>).innerText = <span class="hljs-string">""</span>;}
+           } <span class="hljs-keyword">else</span>{
+            <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#YearErrorMessage"</span>).innerText = <span class="hljs-string">""</span>;}
+        } <span class="hljs-keyword">else</span>{
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#YearErrorMessage"</span>).innerText = <span class="hljs-string">"Year must be between 1965 and 3000; "</span>;
+        }
+        } <span class="hljs-keyword">else</span>{
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#YearErrorMessage"</span>).innerText = <span class="hljs-string">""</span>;
+        }
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>a function that simply checks to see if the date that the user is currently using is valid using the above functions and checking to
+make sure all of their error outputs are “”.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      isValidDate()
+      {
+        <span class="hljs-keyword">let</span> validDate = <span class="hljs-literal">false</span>
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#TypeErrorMessage"</span>).innerText==<span class="hljs-string">""</span>&amp;&amp;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#MonthErrorMessage"</span>).innerText==<span class="hljs-string">""</span>&amp;&amp;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#DayErrorMessage"</span>).innerText==<span class="hljs-string">""</span>&amp;&amp;<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#YearErrorMessage"</span>).innerText==<span class="hljs-string">""</span>)
+        {
+          validDate = <span class="hljs-literal">true</span>;
+        }
+        <span class="hljs-keyword">else</span>
+        {
+          validDate = <span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-keyword">return</span>(validDate);
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>submitEvent only runs if all of the required fields are filled out correctly. This is ensured by admin.js
+submitEvent takes all of the information given by the user and turns it into properly formated information to pass to storage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  submitEvent(eventName, authorName, month, day, year, times, password)
+  {
+    <span class="hljs-keyword">if</span>(month&lt;<span class="hljs-number">10</span>)
+    {
+      month = <span class="hljs-string">"0"</span>+month;
+    }
+    <span class="hljs-keyword">if</span>(day&lt;<span class="hljs-number">10</span>)
+    {
+      day = <span class="hljs-string">"0"</span>+day;
+    }
+    <span class="hljs-keyword">let</span> currentEvent = <span class="hljs-keyword">new</span> Event(eventName,[],[],<span class="hljs-string">""</span> +authorName,<span class="hljs-string">""</span>+ month,<span class="hljs-string">""</span>+day,<span class="hljs-string">""</span>+year, <span class="hljs-string">""</span>+password);
+    <span class="hljs-keyword">let</span> n=<span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(n <span class="hljs-keyword">of</span> times)
+    {
+        n = n<span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">let</span> totalMinutes = <span class="hljs-number">20</span>*n + <span class="hljs-number">300</span>;
+        <span class="hljs-keyword">let</span> timeSuffix = <span class="hljs-string">""</span>;
+        <span class="hljs-keyword">if</span>(n&gt;<span class="hljs-number">20</span>)
+        {
+          totalMinutes = <span class="hljs-number">20</span>*(n<span class="hljs-number">-22</span>)+<span class="hljs-number">800</span>;
+        }
+        <span class="hljs-keyword">let</span> minutes = totalMinutes % <span class="hljs-number">60</span>;
+        <span class="hljs-keyword">if</span>(n%<span class="hljs-number">3</span>==<span class="hljs-number">0</span>)
+        {
+          minutes = <span class="hljs-string">"00"</span>;
+        }
+        <span class="hljs-keyword">let</span> hours = (totalMinutes - minutes)/<span class="hljs-number">60</span>;
+        <span class="hljs-keyword">if</span>(n&lt;<span class="hljs-number">15</span>)
+        {
+          hours = <span class="hljs-string">"0"</span> + hours;
+        }
+      <span class="hljs-keyword">let</span> j = <span class="hljs-number">0</span>;
+      times[j] = hours + <span class="hljs-string">":"</span> + minutes;
+      currentEvent.addTime(<span class="hljs-string">""</span> +times[j]);
+      j++;
+    }
+    <span class="hljs-keyword">let</span> toStore = <span class="hljs-keyword">new</span> StorageManager();
+    toStore.storeEvent(currentEvent);
+  }
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

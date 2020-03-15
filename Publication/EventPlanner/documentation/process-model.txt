@@ -1,0 +1,16 @@
+We took an agile approach to developing this event planner.
+
+We believe the agile approach was better than the waterfall, mainly because when we attempted a waterfall model in the beginning
+it ended up with a lot of programmer conflicts and bottlenecks, so we quickly changed to an agile model to attempt to remedy the situation
+this turned out to be a huge success where everyone could contribute much easier to the project.
+
+We had a trello board with different tasks to be completed, and anyone could grab a card and let everyone know they were working on that.
+
+When a task was finished, it was added to a Testing list and someone else would test the feature to make sure there were no bugs.
+
+We would sometimes change or remove tasks if the project evolved away from them; for example, we originally intended for the planner to look 
+more like a calendar, but ended up with more of a big list.
+
+We would push often and pull whenever someone else pushed to avoid complicated merge conflicts.
+
+Constant communication was key throughout the development process.

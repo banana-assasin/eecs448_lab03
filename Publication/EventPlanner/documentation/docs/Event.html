@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Event.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="Event.html">
+                  Event.js
+                </a>
+              
+                
+                <a class="source" href="EventClass.html">
+                  EventClass.js
+                </a>
+              
+                
+                <a class="source" href="EventFunctions.html">
+                  EventFunctions.js
+                </a>
+              
+                
+                <a class="source" href="TimeTable.html">
+                  TimeTable.js
+                </a>
+              
+                
+                <a class="source" href="admin.html">
+                  admin.js
+                </a>
+              
+                
+                <a class="source" href="attendee.html">
+                  attendee.js
+                </a>
+              
+                
+                <a class="source" href="dummyFile.html">
+                  dummyFile.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="manager.html">
+                  manager.js
+                </a>
+              
+                
+                <a class="source" href="signup.html">
+                  signup.js
+                </a>
+              
+                
+                <a class="source" href="storageManager.html">
+                  storageManager.js
+                </a>
+              
+                
+                <a class="source" href="storageTest.html">
+                  storageTest.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>Event.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>@file Event.js
+@author Ryan Boyce
+@date 02/21/20
+@desc This file contains the implementation for the Event, User, and Account classes. Requires StorageManager class for Account functions.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Event</span>
+</span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Instantiates a new Event object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	<span class="hljs-keyword">constructor</span>(eventName, times, attendees, author, month, day, year, password)
+	{
+		<span class="hljs-keyword">this</span>.eventName = eventName;
+		<span class="hljs-keyword">this</span>.times = times;		<span class="hljs-comment">//an array of times that a User can have for this event. Each time must be given as a five-digit STRING (Ex: 8:40pm becomes 20:40)</span>
+		<span class="hljs-keyword">this</span>.attendees = attendees;	<span class="hljs-comment">//an array of User objects, where each contains an array of available times (does not include the author)</span>
+		<span class="hljs-keyword">this</span>.author = author;
+		<span class="hljs-keyword">this</span>.month = month;		<span class="hljs-comment">//This must be passed as a string to preserve the 0 for single digit months</span>
+		<span class="hljs-keyword">this</span>.day = day;			<span class="hljs-comment">//That applies here as well</span>
+		<span class="hljs-keyword">this</span>.year = year;
+		<span class="hljs-keyword">this</span>.password = password;	<span class="hljs-comment">//Empty string if this is a public event</span>
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Takes the date attributes for an Event and combines them into a single string.
+@return The month, day, and year in mmddyyyy format.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	getDateString(addSlashes)
+	{
+		<span class="hljs-keyword">if</span>(addSlashes)
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.month+<span class="hljs-string">"/"</span>+<span class="hljs-keyword">this</span>.day+<span class="hljs-string">"/"</span>+<span class="hljs-keyword">this</span>.year;
+		<span class="hljs-keyword">else</span>
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.month+<span class="hljs-keyword">this</span>.day+<span class="hljs-keyword">this</span>.year;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Returns the total attendee count for this event.
+@return The number of people that will attend this event, including the creator of the event.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	getAttendeeCount()
+	{
+		<span class="hljs-keyword">return</span>(<span class="hljs-number">1</span>+<span class="hljs-keyword">this</span>.attendees.length);	<span class="hljs-comment">//The added 1 is because attendees[] does not include the author</span>
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Returns the number of people attending the most popular time slot;
+@return The number of people will attend the most popular time slot, including the creator of the event.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	getMaxAttendeeCount()
+	{
+		<span class="hljs-keyword">let</span> largest = <span class="hljs-number">0</span>;
+		<span class="hljs-keyword">let</span> current = <span class="hljs-number">0</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span>.times)
+		{
+			current = <span class="hljs-keyword">this</span>.getAttendeeByTime(<span class="hljs-keyword">this</span>.times[i])
+			<span class="hljs-keyword">if</span>(current&gt;largest)
+			{
+				largest = current;
+			}
+			current = <span class="hljs-number">0</span>;
+		}
+		<span class="hljs-keyword">return</span> largest;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Returns the number of attendees that are planning on attending a given time slot
+@param “time” must be a five-digit string (Ex: 8:40pm becomes 20:40).
+@return The number of people that will attend the given time slot, including the creator of the event.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	getAttendeeByTime(time)
+	{
+		<span class="hljs-keyword">let</span> current = <span class="hljs-number">0</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span>.attendees)
+		{
+			<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.attendees[j].checkTime(time))
+			{
+				current = current + <span class="hljs-number">1</span>;
+			}
+		}
+		<span class="hljs-keyword">return</span>(current+<span class="hljs-number">1</span>);
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Adds a time to the end of the Event’s times array.
+@params “time” must be a five-digit string (Ex: 8:40pm becomes 20:40).
+@post The new time will be added to times in order from the earliest time to the latest time.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	addTime(time)
+	{
+		<span class="hljs-keyword">let</span> newTimes = [];
+		<span class="hljs-keyword">let</span> numberTime = <span class="hljs-built_in">parseInt</span>(<span class="hljs-built_in">parseInt</span>(time) +time.substring(<span class="hljs-number">3</span>)+<span class="hljs-string">""</span>);
+		<span class="hljs-keyword">let</span> foundSlot = <span class="hljs-literal">false</span>;
+		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.times.length == <span class="hljs-number">0</span>)
+		{
+			newTimes.push(time);
+			
+		}
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i =<span class="hljs-number">0</span>;i&lt;<span class="hljs-keyword">this</span>.times.length;i++)
+		{
+			<span class="hljs-keyword">if</span>(<span class="hljs-built_in">parseInt</span>(<span class="hljs-built_in">parseInt</span>(<span class="hljs-keyword">this</span>.times[i])+<span class="hljs-keyword">this</span>.times[i].substring(<span class="hljs-number">3</span>)+<span class="hljs-string">""</span>)&lt;numberTime)
+			{
+				newTimes.push(<span class="hljs-keyword">this</span>.times[i]);
+			}<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>((<span class="hljs-built_in">parseInt</span>(<span class="hljs-built_in">parseInt</span>(<span class="hljs-keyword">this</span>.times[i])+<span class="hljs-string">""</span>+<span class="hljs-keyword">this</span>.times[i].substring(<span class="hljs-number">3</span>))&gt;numberTime) &amp;&amp; !foundSlot)
+			{
+				newTimes.push(time);
+				foundSlot = <span class="hljs-literal">true</span>;
+				i = i<span class="hljs-number">-1</span>;
+				
+			}<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>((<span class="hljs-built_in">parseInt</span>(<span class="hljs-built_in">parseInt</span>(<span class="hljs-keyword">this</span>.times[i])+<span class="hljs-string">""</span>+<span class="hljs-keyword">this</span>.times[i].substring(<span class="hljs-number">3</span>))&gt;numberTime))
+			{
+				newTimes.push(<span class="hljs-keyword">this</span>.times[i]);
+			}
+			
+		}
+		<span class="hljs-keyword">if</span>(!foundSlot)
+		{
+			newTimes.push(time);
+			foundSlot = <span class="hljs-literal">true</span>;
+		}
+		<span class="hljs-keyword">this</span>.times = newTimes;
+		<span class="hljs-comment">/*this.times.push(time);*/</span>
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Removes a time from the Event’s times array, and updates all Users that have that time.
+@params “time” must be a five-digit string (Ex: 8:40pm becomes 20:40).
+@post The time provided will be removed from times.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	removeTime(time)
+	{
+		<span class="hljs-keyword">let</span> newTimes = [];
+		<span class="hljs-keyword">let</span> foundTime = <span class="hljs-literal">false</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.times.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.times[i] == time)
+				foundTime = <span class="hljs-literal">true</span>;
+			<span class="hljs-keyword">else</span>
+				newTimes.push(<span class="hljs-keyword">this</span>.times[i]);
+		}
+		<span class="hljs-keyword">if</span>(foundTime)
+		{
+			<span class="hljs-keyword">this</span>.times = newTimes;
+			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.attendees.length; i++)
+			{
+				<span class="hljs-keyword">this</span>.attendees[i].removeTime(time);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Check to make sure this User still has any times left in its array</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.attendees[i].times.length == <span class="hljs-number">0</span>)
+				{
+					<span class="hljs-keyword">this</span>.removeUser(<span class="hljs-keyword">this</span>.attendees[i].userName);	<span class="hljs-comment">//Remove them if they have no times in common with this Event</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Restart the loop, since the size of the array will have changed</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					i = <span class="hljs-number">-1</span>;
+					<span class="hljs-keyword">continue</span>;
+				}
+			}
+		}
+		<span class="hljs-keyword">else</span>
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Unable to remove time from "</span>+<span class="hljs-keyword">this</span>.eventName+<span class="hljs-string">"; "</span>+time+<span class="hljs-string">" is not currently an available time for this event."</span>);
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Adds a User object to the end of the Event’s attendees array.
+@params “user” must be a valid User object.
+@post The given User is added to attendees.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	addUser(user)
+	{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Make sure user isn’t already in the array</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.attendees.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.attendees[i].userName == user.userName)	<span class="hljs-comment">//If it is in the array, update it</span>
+			{
+				<span class="hljs-keyword">this</span>.attendees[i] = user;
+				<span class="hljs-keyword">return</span>;
+			}
+		}
+		<span class="hljs-keyword">if</span>(user.userName != <span class="hljs-keyword">this</span>.author)
+		{
+			<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.isValidTimeList(user.times))
+				<span class="hljs-keyword">this</span>.attendees.push(user);
+			<span class="hljs-keyword">else</span>
+				<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Unable to add user "</span>+user.userName+<span class="hljs-string">" to event "</span>+<span class="hljs-keyword">this</span>.eventName+<span class="hljs-string">"; user has times that are not available for this event."</span>);
+		}
+		<span class="hljs-keyword">else</span>
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Unable to add user "</span>+user.userName+<span class="hljs-string">" to event "</span>+<span class="hljs-keyword">this</span>.eventName+<span class="hljs-string">"; user is already the creator for this event."</span>);
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Removes a User object from the Event’s attendees array.
+@params “userName” refers to the userName attribute of the User object that needs to be removed.
+@post The given User is removed from attendees and the associated Account will no longer have this event listed.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	removeUser(userName)
+	{
+		<span class="hljs-keyword">let</span> newAttendees = [];
+		<span class="hljs-keyword">let</span> foundUser = <span class="hljs-literal">false</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.attendees.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.attendees[i].userName == userName)
+				foundUser = <span class="hljs-literal">true</span>;
+			<span class="hljs-keyword">else</span>
+				newAttendees.push(<span class="hljs-keyword">this</span>.attendees[i]);
+		}
+		<span class="hljs-keyword">if</span>(foundUser)
+			<span class="hljs-keyword">this</span>.attendees = newAttendees;
+		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(userName == <span class="hljs-keyword">this</span>.author)
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Unable to remove user "</span>+userName+<span class="hljs-string">" from "</span>+<span class="hljs-keyword">this</span>.eventName+<span class="hljs-string">"; the event's creator cannot be removed."</span>);
+		<span class="hljs-keyword">else</span>
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Unable to remove user "</span>+userName+<span class="hljs-string">" from "</span>+<span class="hljs-keyword">this</span>.eventName+<span class="hljs-string">"; user not found."</span>);
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Verifies whether a time is within this Event’s times array. DOES NOT verify if the given time is provided in the correct format.
+@params “time” must be a five-digit string (Ex: 8:40pm becomes 20:40).
+@return “true” if the given time is found, “false” otherwise.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	isValidTime(time)
+	{
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.times.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(time == <span class="hljs-keyword">this</span>.times[i])
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Verifies whether an array of times is a subset of this Event’s times array.
+@params Each entry in “timeList” must be a five-digit string (Ex: 8:40pm becomes 20:40).
+@return “true” if every time is in the array, “false” otherwise.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	isValidTimeList(timeList)
+	{
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; timeList.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.isValidTime(timeList[i]))
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Prints to console all attributes.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	print()
+	{
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"--PRINTING EVENT--"</span>);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"eventName:"</span>,<span class="hljs-keyword">this</span>.eventName);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"author:"</span>,<span class="hljs-keyword">this</span>.author);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"date:"</span>,<span class="hljs-keyword">this</span>.getDateString(<span class="hljs-literal">true</span>));
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"password:"</span>,<span class="hljs-keyword">this</span>.password);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"times:"</span>);
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.times.length; i++)
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.times[i]);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"attendees:"</span>);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.author);
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.attendees.length; i++)
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.attendees[i].userName);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"--"</span>);
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Prints to console the attributes of each User in this Event’s attendees array.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	printUsers()
+	{
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.attendees.length; i++)
+			<span class="hljs-keyword">this</span>.attendees[i].print();
+	}
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span>  //<span class="hljs-title">A</span> <span class="hljs-title">User</span> <span class="hljs-title">should</span> <span class="hljs-title">be</span> <span class="hljs-title">local</span> <span class="hljs-title">to</span> <span class="hljs-title">an</span> <span class="hljs-title">Event</span></span>; <span class="hljs-keyword">if</span> someone signed up <span class="hljs-keyword">for</span> two different events, two independent User objects will be made.
+{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Instantiates a new User object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	<span class="hljs-keyword">constructor</span>(userName, times)
+	{
+		<span class="hljs-keyword">this</span>.userName = userName;
+		<span class="hljs-keyword">this</span>.times = times;	<span class="hljs-comment">//an array of numbers that represents the times that this user is available for a given Event</span>
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Adds a time to the end of the User’s times array. Note: There is no guarantee that the time being added will be compatible with the corresponding Event times.
+@params “time” must be a five-digit string (Ex: 8:40pm becomes 20:40).
+@post The new time will be added to times.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	addTime(time)
+	{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Make sure the time is not already in the array</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> foundTime = <span class="hljs-literal">false</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.times.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(time == <span class="hljs-keyword">this</span>.times[i])
+				foundTime = <span class="hljs-literal">true</span>;
+		}
+		<span class="hljs-keyword">if</span>(!foundTime)
+			<span class="hljs-keyword">this</span>.times.push(time);
+		<span class="hljs-keyword">else</span>
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Unable to add time "</span>+time+<span class="hljs-string">" to "</span>+<span class="hljs-keyword">this</span>.userName+<span class="hljs-string">"; time is already listed."</span>);
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Removes a time from the User’s times array.
+@params “time” must be a five-digit string (Ex: 8:40pm becomes 20:40).
+@post The time provided will be removed from times.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	removeTime(time)
+	{
+		<span class="hljs-keyword">let</span> newTimes = [];
+		<span class="hljs-keyword">let</span> foundTime = <span class="hljs-literal">false</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.times.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.times[i] == time)
+				foundTime = <span class="hljs-literal">true</span>;
+			<span class="hljs-keyword">else</span>
+				newTimes.push(<span class="hljs-keyword">this</span>.times[i]);
+		}
+		<span class="hljs-keyword">if</span>(foundTime)
+			<span class="hljs-keyword">this</span>.times = newTimes;
+		<span class="hljs-keyword">else</span>
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Unable to remove time from "</span>+<span class="hljs-keyword">this</span>.userName+<span class="hljs-string">"; "</span>+time+<span class="hljs-string">" is not a time for this user."</span>);
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Checks if the user is planning to attend at a given time
+@param “time” must be a five-digit string (Ex: 8:40 pm becomes 20:40).
+@Return True if the given time is in this.times, false if its not in this.times.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	checkTime(time)
+	{
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span>.times)
+		{
+			<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.times[i]==time)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+			}
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Prints to console the name and times for this User.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	print()
+	{
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"--PRINTING USER--"</span>);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"userName:"</span>,<span class="hljs-keyword">this</span>.userName);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"times:"</span>);
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.times.length; i++)
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.times[i]);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"--"</span>);
+	}
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Account</span> //<span class="hljs-title">An</span> <span class="hljs-title">Account</span> <span class="hljs-title">is</span> <span class="hljs-title">not</span> <span class="hljs-title">local</span> <span class="hljs-title">to</span> <span class="hljs-title">an</span> <span class="hljs-title">Event</span>, <span class="hljs-title">and</span> <span class="hljs-title">has</span> <span class="hljs-title">the</span> <span class="hljs-title">option</span> <span class="hljs-title">to</span> <span class="hljs-title">find</span> <span class="hljs-title">what</span> <span class="hljs-title">Event</span> <span class="hljs-title">objects</span> <span class="hljs-title">it</span> <span class="hljs-title">is</span> <span class="hljs-title">an</span> <span class="hljs-title">author</span> <span class="hljs-title">or</span> <span class="hljs-title">User</span> <span class="hljs-title">for</span>.
+</span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Instantiates a new Account object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	<span class="hljs-keyword">constructor</span>(userName, password)
+	{
+		<span class="hljs-keyword">this</span>.userName = userName;
+		<span class="hljs-keyword">this</span>.password = password;
+		<span class="hljs-keyword">this</span>.eventsCreated = [];	<span class="hljs-comment">//List of eventNames, not Event objects</span>
+		<span class="hljs-keyword">this</span>.eventsJoined = [];		<span class="hljs-comment">//Same here</span>
+
+		<span class="hljs-keyword">this</span>.updateEventsCreated();
+		<span class="hljs-keyword">this</span>.updateEventsJoined();
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Checks local storage for all the Event objects that this Account is the author for.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	updateEventsCreated()
+	{
+		<span class="hljs-keyword">let</span> created = [];
+		<span class="hljs-keyword">let</span> sm = <span class="hljs-keyword">new</span> StorageManager();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Retrieve from storage the list of events</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> eventList = sm.retrieveAll();
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; eventList.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(eventList[i].author == <span class="hljs-keyword">this</span>.userName)
+				created.push(eventList[i].eventName);
+		}
+		<span class="hljs-keyword">this</span>.eventsCreated = created;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Checks local storage for all the Event objects that this Acccount is a user for.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	updateEventsJoined()
+	{
+		<span class="hljs-keyword">let</span> joined = [];
+		<span class="hljs-keyword">let</span> sm = <span class="hljs-keyword">new</span> StorageManager();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Retrieve from storage the list of events</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> eventList = sm.retrieveAll();
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; eventList.length; i++)
+		{
+			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = <span class="hljs-number">0</span>; j &lt; eventList[i].attendees.length; j++)
+			{
+				<span class="hljs-keyword">if</span>(eventList[i].attendees[j].userName == <span class="hljs-keyword">this</span>.userName)
+					joined.push(eventList[i].eventName);
+			}
+		}
+		<span class="hljs-keyword">this</span>.eventsJoined = joined;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Verifies if this Account is the author for the given Event.
+@params “eventName” must be the eventName attribute of the Event object being verified, not the object itself.
+@return “true” if the given event is a part of the eventsCreated array, “false” otherwise.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	isAuthor(eventName)
+	{
+		<span class="hljs-keyword">this</span>.updateEventsCreated();
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.eventsCreated.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.eventsCreated[i] == eventName)
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Verifies if this Account is a User for the given Event.
+@params “eventName” must be the eventName attribute of the Event object being verified, not the object itself.
+@return “true” if the given event is a part of the eventsJoined array, “false” otherwise.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	isUser(eventName)
+	{
+		<span class="hljs-keyword">this</span>.updateEventsJoined();
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.eventsJoined.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.eventsJoined[i] == eventName)
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>Prints to console the username and password for this Account.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	print()
+	{
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"--PRINTING ACCOUNT--"</span>);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"userName:"</span>,<span class="hljs-keyword">this</span>.userName);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"password:"</span>,<span class="hljs-keyword">this</span>.password);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"eventsCreated:"</span>);
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.eventsCreated.length; i++)
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.eventsCreated[i]);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"eventsJoined:"</span>);
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.eventsJoined.length; i++)
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.eventsJoined[i]);
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"--"</span>);
+	}
+}</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

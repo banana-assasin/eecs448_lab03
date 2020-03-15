@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>storageManager.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="Event.html">
+                  Event.js
+                </a>
+              
+                
+                <a class="source" href="EventClass.html">
+                  EventClass.js
+                </a>
+              
+                
+                <a class="source" href="EventFunctions.html">
+                  EventFunctions.js
+                </a>
+              
+                
+                <a class="source" href="TimeTable.html">
+                  TimeTable.js
+                </a>
+              
+                
+                <a class="source" href="admin.html">
+                  admin.js
+                </a>
+              
+                
+                <a class="source" href="attendee.html">
+                  attendee.js
+                </a>
+              
+                
+                <a class="source" href="dummyFile.html">
+                  dummyFile.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="manager.html">
+                  manager.js
+                </a>
+              
+                
+                <a class="source" href="signup.html">
+                  signup.js
+                </a>
+              
+                
+                <a class="source" href="storageManager.html">
+                  storageManager.js
+                </a>
+              
+                
+                <a class="source" href="storageTest.html">
+                  storageTest.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>storageManager.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>@file storageManager.js
+@author Ryan Boyce
+@date 02/20/20
+@desc This file contains the implementation for the StorageManager class, the object primarily responsible for handling local storage transfers.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Web storage help from <a href="https://www.w3schools.com/html/html5_webstorage.asp">https://www.w3schools.com/html/html5_webstorage.asp</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StorageManager</span>
+</span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Instantiates a new storageManager, an object used for translating between Event objects and local storage strings.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	<span class="hljs-keyword">constructor</span>()
+	{
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Event functions ——————————————–</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Adds the Event object to local storage or overrides the event.
+@pre “event” must be a valid Event object.
+@post The given event’s attributes are retrievable as strings from local storage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	storeEvent(event)
+	{
+		<span class="hljs-keyword">let</span> eventId = <span class="hljs-string">"event0"</span>;	<span class="hljs-comment">//This is used as a key for local storage to determine where the event is stored</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Check to see if this is the first event added</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> foundEvent = <span class="hljs-literal">false</span>;
+		<span class="hljs-keyword">if</span>(localStorage.eventCount)
+		{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>This is not the first event, check to see if this event already exists</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt;= localStorage.eventCount; i++)
+			{
+				eventId = <span class="hljs-string">"event"</span>+i;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>console.log(“Id checked:”,eventId);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				<span class="hljs-keyword">let</span> locEventId = localStorage.getItem(eventId);
+				<span class="hljs-keyword">if</span>(locEventId == event.eventName)	<span class="hljs-comment">//Found the event</span>
+				{
+					foundEvent = <span class="hljs-literal">true</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Wipe the user list for this event, in case the event was updated to have fewer users</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = <span class="hljs-number">0</span>; j &lt; localStorage.getItem(eventId+<span class="hljs-string">"_userCount"</span>); j++)
+						localStorage.setItem(eventId+<span class="hljs-string">"_"</span>+j,<span class="hljs-string">""</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>console.log(“Found id:”,eventId);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					<span class="hljs-keyword">break</span>;
+				}
+			}
+		}
+		<span class="hljs-keyword">else</span>
+			localStorage.eventCount = <span class="hljs-number">0</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>If this is the first event or this event has not yet been added</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">if</span>(!foundEvent)	
+		{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>console.log(“Could not find event:”,eventId);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			localStorage.setItem(eventId, event.eventName);
+			localStorage.eventCount++;	
+		}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>By doing this, local storage will have a list of events (event0, event1, event2,…),
+where the string held by each key will contain the event name for each event that has been stored.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Store the date, author, and password</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> eventDate = eventId+<span class="hljs-string">"_date"</span>;	<span class="hljs-comment">//Key used to store the date of the event</span>
+		localStorage.setItem(eventDate, event.getDateString(<span class="hljs-literal">false</span>));
+
+		<span class="hljs-keyword">let</span> eventAuthor = eventId+<span class="hljs-string">"_author"</span>;	<span class="hljs-comment">//Key used to store the author of the event</span>
+		localStorage.setItem(eventAuthor, event.author);
+
+		<span class="hljs-keyword">let</span> eventPassword = eventId+<span class="hljs-string">"_password"</span>;<span class="hljs-comment">//Key used to store the password of the event</span>
+		localStorage.setItem(eventPassword, event.password);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Store each time from the event’s times[] array into a single string</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> eventTimes = eventId+<span class="hljs-string">"_times"</span>;	<span class="hljs-comment">//Key used to store the times that users can select for this event</span>
+		<span class="hljs-keyword">let</span> str = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; event.times.length; i++)
+			str += <span class="hljs-string">" "</span>+event.times[i];
+		localStorage.setItem(eventTimes, str);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Store the user count for iteration purposes, and so it will know how many users to retrieve from storage later on</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> userCount = eventId+<span class="hljs-string">"_userCount"</span>;	<span class="hljs-comment">//Key used to determine how many users (not including the author) are available for this event (event0_user_count)</span>
+		localStorage.setItem(userCount, event.attendees.length);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Store each user/attendee’s name and times</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> userId = eventId+<span class="hljs-string">"_0"</span>;		<span class="hljs-comment">//Key used to represent a user of this event (event0_0, event0_1, event0_2,...)</span>
+
+		<span class="hljs-keyword">let</span> str2 = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; localStorage.getItem(userCount); i++)
+		{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Store name</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			userId = eventId+<span class="hljs-string">"_"</span>+i;
+			localStorage.setItem(userId,event.attendees[i].userName);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Obtain each time value from the current user</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = <span class="hljs-number">0</span>; j &lt; event.attendees[i].times.length; j++)
+				str2 += <span class="hljs-string">" "</span>+event.attendees[i].times[j];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Store times</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			localStorage.setItem(userId+<span class="hljs-string">"_times"</span>, str2);
+			str2 = <span class="hljs-string">""</span>;
+		}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Local storage will now contain:
+    eventCount       -&gt; eventCount+1
+    event#           -&gt; eventName
+    event#_date      -&gt; date
+    event#_author    -&gt; author
+    event#_password  -&gt; password
+    event#_times     -&gt; time1 time 2 …
+    event#_userCount -&gt; (# of users that have signed up for the event, not including author)
+    event#_0         -&gt; userName
+    event#<em>0</em>times   -&gt; time1 time2 …
+    event#_1         -&gt; userName
+    event#<em>1</em>times   -&gt; time1 time2 …
+    …</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Stores all Event objects from a given list into local storage.
+@pre “eventList” must refer to an array that contains only Event objects.
+@post The attributes of each event will be retrievable as strings from local storage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	storeAll(eventList)
+	{
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; eventList.length; i++)
+			<span class="hljs-keyword">this</span>.storeEvent(eventList[i]);
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Retrieves and converts strings from local storage to create an Event object.
+@pre Parameters must refer to an event that actually exists (Ex: event0, event1,…), otherwise an empty Event object will be returned.
+@return The Event object that matches the eventId.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	retrieveEvent(eventId)
+	{		
+		<span class="hljs-keyword">let</span> eventName = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">let</span> times = [];
+		<span class="hljs-keyword">let</span> attendees = [];
+		<span class="hljs-keyword">let</span> author = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">let</span> month = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">let</span> day = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">let</span> year = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">let</span> password = <span class="hljs-string">""</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Find the event with the corresponding event id, if it exists</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> foundEvent = <span class="hljs-literal">false</span>;
+		<span class="hljs-keyword">if</span>(localStorage.getItem(eventId) != <span class="hljs-string">""</span>)
+		{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Name</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			eventName = localStorage.getItem(eventId);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Times</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">let</span> timesStr = eventId+<span class="hljs-string">"_times"</span>;
+			<span class="hljs-keyword">let</span> str = localStorage.getItem(timesStr);
+			<span class="hljs-keyword">let</span> timeCount = <span class="hljs-number">0</span>;
+			times[<span class="hljs-number">0</span>] = <span class="hljs-string">""</span>;
+			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt; str.length; i++)	<span class="hljs-comment">//Starts at 1 because the string starts with a space</span>
+			{
+				<span class="hljs-keyword">if</span>(str.charAt(i) != <span class="hljs-string">" "</span>)
+					times[timeCount] += str.charAt(i);
+				<span class="hljs-keyword">else</span>
+				{
+					timeCount++;
+					times[timeCount] = <span class="hljs-string">""</span>;
+				}
+			}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Attendees</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">let</span> attendeesStr = eventId+<span class="hljs-string">"_userCount"</span>;
+			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; localStorage.getItem(attendeesStr); i++)	<span class="hljs-comment">//For each user</span>
+			{
+				<span class="hljs-keyword">let</span> userStr = eventId+<span class="hljs-string">"_"</span>+i;
+				<span class="hljs-keyword">let</span> userName = localStorage.getItem(userStr);
+				<span class="hljs-keyword">let</span> userTimesStr = userStr+<span class="hljs-string">"_times"</span>;
+				<span class="hljs-keyword">let</span> str2 = localStorage.getItem(userTimesStr);
+				<span class="hljs-keyword">let</span> userTimes = [];
+				timeCount = <span class="hljs-number">0</span>;
+				userTimes[<span class="hljs-number">0</span>] = <span class="hljs-string">""</span>;
+				<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = <span class="hljs-number">1</span>; j &lt; str2.length; j++) <span class="hljs-comment">//For each character in the string, skipping the first space</span>
+				{
+					<span class="hljs-keyword">if</span>(str2.charAt(j) != <span class="hljs-string">" "</span>)
+					{
+						userTimes[timeCount] += str2.charAt(j);
+					}
+					<span class="hljs-keyword">else</span>
+					{
+						timeCount++;
+						userTimes[timeCount] = <span class="hljs-string">""</span>;
+					}
+				}
+				attendees[i] = <span class="hljs-keyword">new</span> User(userName, userTimes);
+			}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Author</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">let</span> authorStr = eventId+<span class="hljs-string">"_author"</span>;
+			author = localStorage.getItem(authorStr);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Date</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">let</span> dateStr = eventId+<span class="hljs-string">"_date"</span>;
+			<span class="hljs-keyword">let</span> date = localStorage.getItem(dateStr);
+			month = date.substring(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>);
+			day = date.substring(<span class="hljs-number">2</span>,<span class="hljs-number">4</span>);
+			year = date.substring(<span class="hljs-number">4</span>,<span class="hljs-number">8</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Password</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">let</span> passwordStr = eventId+<span class="hljs-string">"_password"</span>;
+			password = localStorage.getItem(passwordStr);
+		}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>Return the new object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> event = <span class="hljs-keyword">new</span> Event(eventName, times, attendees, author, month, day, year, password);
+		<span class="hljs-keyword">return</span> event;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>Retreives all events from local storage and places them in an array.
+@return An array of Event objects.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	retrieveAll()
+	{
+		<span class="hljs-keyword">let</span> eventList = [];
+		<span class="hljs-keyword">let</span> eventId = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.getEventCount(); i++)
+		{
+			eventId = <span class="hljs-string">"event"</span>+i;
+			eventList[i] = <span class="hljs-keyword">this</span>.retrieveEvent(eventId);
+		}
+		<span class="hljs-keyword">return</span> eventList;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>Searches for an Event in local storage with a matching eventName attribute.
+@return “true” if a matching event is found, “false” otherwise.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	findEvent(eventName)
+	{
+		<span class="hljs-keyword">let</span> eventList = <span class="hljs-keyword">this</span>.retrieveAll();
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; eventList.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(eventName == eventList[i].eventName)
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Obtains the key that an event is stored under in local storage (ex: event0 for the first event, event1 for the second, …)
+@return The key for the given event, if the event exists. If unable to find the event, empty string is returned.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	getEventId(eventName)
+	{
+		<span class="hljs-keyword">let</span> eventList = <span class="hljs-keyword">this</span>.retrieveAll();
+		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.findEvent(eventName))
+		{
+			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; eventList.length; i++)
+			{
+				<span class="hljs-keyword">if</span>(eventName == eventList[i].eventName)
+					<span class="hljs-keyword">return</span> <span class="hljs-string">"event"</span>+i;
+			}
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;	<span class="hljs-comment">//Unable to find that event</span>
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Obtains the total number of events that are stored in local storage.
+@return localStorage.eventCount, if it has been assigned a value. If not, then 0 is returned.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	getEventCount()
+	{
+		<span class="hljs-keyword">if</span>(localStorage.eventCount)
+		{
+			<span class="hljs-keyword">return</span> localStorage.eventCount;
+		}
+		<span class="hljs-keyword">else</span>	<span class="hljs-comment">//If this is false, then eventCount == empty string</span>
+			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Wipes local storage for a given event.
+@params “eventName” refers to the eventName attribute of the Event object you wish to remove from storage; “debug” enables console logging.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	clearEvent(eventName,debug)
+	{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>Retrieve all events and remove the event from the list</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> eventList = <span class="hljs-keyword">this</span>.retrieveAll();
+		<span class="hljs-keyword">let</span> newList = [];
+		<span class="hljs-keyword">let</span> foundEvent = <span class="hljs-literal">false</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; eventList.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(eventList[i].eventName == eventName)
+				foundEvent = <span class="hljs-literal">true</span>;
+			<span class="hljs-keyword">else</span>
+				newList.push(eventList[i]);
+		}
+		<span class="hljs-keyword">if</span>(foundEvent)	<span class="hljs-comment">//If the event was successfully found and removed</span>
+		{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Wipe storage to get rid of the event from storage</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">this</span>.clearStorage(debug);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Put all other events back into storage</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">this</span>.storeAll(newList);
+
+			<span class="hljs-keyword">if</span>(debug)
+				<span class="hljs-built_in">console</span>.log(eventName,<span class="hljs-string">"removed successfully from local storage"</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>The reason this retrieves events and wipes storage instead of editing storage directly is because
+its easier to store an array than having to shift every string in storage labeled under event1 to
+event0 for every event.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			
+		}
+		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(debug)
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Unable to clearEvent() for"</span>,eventName,<span class="hljs-string">"; no event found"</span>);
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>Wipes local storage of all event keys and strings.
+@params “debug” enables console logging.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	clearStorage(debug)
+	{
+		<span class="hljs-keyword">if</span>(debug)
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"--CLEARING EVENT STORAGE--"</span>);
+
+		<span class="hljs-keyword">let</span> userCount = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">let</span> str = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; localStorage.eventCount; i++)
+		{
+			userCount = <span class="hljs-string">"event"</span>+i+<span class="hljs-string">"_userCount"</span>;
+			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = <span class="hljs-number">0</span>; j &lt; localStorage.getItem(userCount); j++)
+			{
+				str = <span class="hljs-string">"event"</span>+i+<span class="hljs-string">"_"</span>+j;
+				localStorage.removeItem(str);
+				<span class="hljs-keyword">if</span>(debug) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Removed:"</span>,<span class="hljs-string">"event"</span>+i+<span class="hljs-string">"_"</span>+j);
+			}
+			localStorage.removeItem(userCount);
+			<span class="hljs-keyword">if</span>(debug) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Removed:"</span>,userCount);
+			
+			str = <span class="hljs-string">"event"</span>+i+<span class="hljs-string">"_author"</span>;
+			localStorage.removeItem(str);
+			<span class="hljs-keyword">if</span>(debug) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Removed:"</span>,str);
+
+			str = <span class="hljs-string">"event"</span>+i+<span class="hljs-string">"_date"</span>;
+			localStorage.removeItem(str);
+			<span class="hljs-keyword">if</span>(debug) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Removed:"</span>,str);
+
+			str = <span class="hljs-string">"event"</span>+i+<span class="hljs-string">"_password"</span>;
+			localStorage.removeItem(str);
+			<span class="hljs-keyword">if</span>(debug) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Removed:"</span>,str);
+
+			str = <span class="hljs-string">"event"</span>+i;
+			localStorage.removeItem(str);
+			<span class="hljs-keyword">if</span>(debug) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Removed:"</span>,str);
+		}
+		localStorage.eventCount = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">if</span>(debug)
+		{
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Removed: eventCount"</span>);
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"--"</span>);
+		}
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>Account functions ———————————————————-</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>Adds the Account object to local storage or overrides the event.
+@pre “account” must be a valid Account object.
+@post The given account’s attributes are retrievable as strings from local storage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	storeAccount(account)
+	{
+		<span class="hljs-keyword">let</span> accountId = <span class="hljs-string">"account0"</span>;	<span class="hljs-comment">//This is used as a key for local storage to determine where the account is stored</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>Check to see if this is the first account added</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> foundAccount = <span class="hljs-literal">false</span>;
+		<span class="hljs-keyword">if</span>(localStorage.accountCount)
+		{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>This is not the first account, check to see if this account already exists</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt;= localStorage.accountCount; i++)
+			{
+				accountId = <span class="hljs-string">"account"</span>+i;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>console.log(“Id checked:”,accountId);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>				<span class="hljs-keyword">let</span> locAccountId = localStorage.getItem(accountId);
+				<span class="hljs-keyword">let</span> locAccountPass = localStorage.getItem(accountId+<span class="hljs-string">"_password"</span>);
+				<span class="hljs-keyword">if</span>(locAccountId == account.userName &amp;&amp; locAccountPass == account.password)	<span class="hljs-comment">//Found the account, don't store it</span>
+				{
+					foundAccount = <span class="hljs-literal">true</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>console.log(“Found id:”,accountId);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>					<span class="hljs-keyword">return</span>;
+				}
+			}
+		}
+		<span class="hljs-keyword">else</span>
+			localStorage.accountCount = <span class="hljs-number">0</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <p>If this is the first account or this account has not yet been added</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">if</span>(!foundAccount)	
+		{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-50">&#182;</a>
+              </div>
+              <p>console.log(“Could not find account:”,accountId);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			localStorage.setItem(accountId, account.userName);
+			localStorage.accountCount++;	
+		}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              <p>By doing this, local storage will have a list of accounts (account0, account1, account2,…),
+where the string held by each key will contain the user name for each account that has been stored.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <p>Store the password</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> accountPassword = accountId+<span class="hljs-string">"_password"</span>;	<span class="hljs-comment">//Key used to store the password</span>
+		localStorage.setItem(accountPassword, account.password);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-53">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-53">&#182;</a>
+              </div>
+              <p>Local storage will now contain:
+    accountCount     -&gt; accountCount+1
+    account#         -&gt; userName
+    account#_password-&gt; password
+    …</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-54">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-54">&#182;</a>
+              </div>
+              <p>Stores all Account objects from a given list into local storage.
+@pre “accountList” must refer to an array that contains only Account objects.
+@post The attributes of each account will be retrievable as strings from local storage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	storeAllAccounts(accountList)
+	{
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; accountList.length; i++)
+			<span class="hljs-keyword">this</span>.storeAccount(accountList[i]);
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-55">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-55">&#182;</a>
+              </div>
+              <p>Retrieves and converts strings from local storage to create an Account object.
+@pre Parameters must refer to an account that actually exists (Ex: account0, account1,…), otherwise an empty Account object will be returned.
+@return The Account object that matches the accountId.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	retrieveAccount(accountId)
+	{
+		<span class="hljs-keyword">let</span> userName = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">let</span> password = <span class="hljs-string">""</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-56">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-56">&#182;</a>
+              </div>
+              <p>Find the account with the corresponding account id, if it exists</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> foundAccount = <span class="hljs-literal">false</span>;
+		<span class="hljs-keyword">if</span>(localStorage.getItem(accountId) != <span class="hljs-string">""</span>)
+		{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-57">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-57">&#182;</a>
+              </div>
+              <p>Name</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			userName = localStorage.getItem(accountId);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-58">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-58">&#182;</a>
+              </div>
+              <p>Password</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">let</span> passwordStr = accountId+<span class="hljs-string">"_password"</span>;
+			password = localStorage.getItem(passwordStr);
+		}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-59">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-59">&#182;</a>
+              </div>
+              <p>Return the new object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> account = <span class="hljs-keyword">new</span> Account(userName, password);
+		<span class="hljs-keyword">return</span> account;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-60">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-60">&#182;</a>
+              </div>
+              <p>Retreives all accounts from local storage and places them in an array.
+@return An array of Account objects.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	retrieveAllAccounts()
+	{
+		<span class="hljs-keyword">let</span> accountList = [];
+		<span class="hljs-keyword">let</span> accountId = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.getAccountCount(); i++)
+		{
+			accountId = <span class="hljs-string">"account"</span>+i;
+			accountList[i] = <span class="hljs-keyword">this</span>.retrieveAccount(accountId);
+		}
+		<span class="hljs-keyword">return</span> accountList;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-61">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-61">&#182;</a>
+              </div>
+              <p>Searches for an Account in local storage with a matching userName attribute.
+@return “true” if a matching account is found, “false” otherwise.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	findAccount(userName)
+	{
+		<span class="hljs-keyword">let</span> accountList = <span class="hljs-keyword">this</span>.retrieveAllAccounts();
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; accountList.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(userName == accountList[i].userName)
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-62">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-62">&#182;</a>
+              </div>
+              <p>Obtains the key that an account is stored under in local storage (ex: account0 for the first account, account1 for the second, …)
+@return The key for the given account, if the account exists. If unable to find the account, empty string is returned.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	getAccountId(userName)
+	{
+		<span class="hljs-keyword">let</span> accountList = <span class="hljs-keyword">this</span>.retrieveAllAccounts();
+		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.findAccount(userName))
+		{
+			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; accountList.length; i++)
+			{
+				<span class="hljs-keyword">if</span>(userName == accountList[i].userName)
+					<span class="hljs-keyword">return</span> <span class="hljs-string">"account"</span>+i;
+			}
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;	<span class="hljs-comment">//Unable to find that account</span>
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-63">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-63">&#182;</a>
+              </div>
+              <p>Obtains the total number of accounts that are stored in local storage.
+@return localStorage.accountCount, if it has been assigned a value. If not, then 0 is returned.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	getAccountCount()
+	{
+		<span class="hljs-keyword">if</span>(localStorage.accountCount)
+		{
+			<span class="hljs-keyword">return</span> localStorage.accountCount;
+		}
+		<span class="hljs-keyword">else</span>	<span class="hljs-comment">//If this is false, then accountCount == empty string</span>
+			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-64">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-64">&#182;</a>
+              </div>
+              <p>Wipes local storage for a given account.
+@params “userName” refers to the userName attribute of the Account object you wish to remove from storage; “debug” enables console logging.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	clearAccount(userName,debug)
+	{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-65">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-65">&#182;</a>
+              </div>
+              <p>Retrieve all accounts and remove the account from the list</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>		<span class="hljs-keyword">let</span> accountList = <span class="hljs-keyword">this</span>.retrieveAllAccounts();
+		<span class="hljs-keyword">let</span> newList = [];
+		<span class="hljs-keyword">let</span> foundAccount = <span class="hljs-literal">false</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; accountList.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(accountList[i].userName == userName)
+				foundAccount = <span class="hljs-literal">true</span>;
+			<span class="hljs-keyword">else</span>
+				newList.push(accountList[i]);
+		}
+		<span class="hljs-keyword">if</span>(foundAccount)	<span class="hljs-comment">//If the account was successfully found and removed</span>
+		{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-66">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-66">&#182;</a>
+              </div>
+              <p>Wipe storage to get rid of this account from storage</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">this</span>.clearStorageAccounts(debug);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-67">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-67">&#182;</a>
+              </div>
+              <p>Put all other accounts back into storage</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			<span class="hljs-keyword">this</span>.storeAllAccounts(newList);
+
+			<span class="hljs-keyword">if</span>(debug)
+				<span class="hljs-built_in">console</span>.log(userName,<span class="hljs-string">"removed successfully from local storage"</span>);
+		}
+		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(debug)
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Unable to clearAccount() for"</span>,userName,<span class="hljs-string">"; no account found"</span>);
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-68">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-68">&#182;</a>
+              </div>
+              <p>Wipes local storage of all account keys and strings.
+@params “debug” enables console logging.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	clearStorageAccounts(debug)
+	{
+		<span class="hljs-keyword">if</span>(debug)
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"--CLEARING ACCOUNT STORAGE--"</span>);
+
+		<span class="hljs-keyword">let</span> userCount = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">let</span> str = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; localStorage.accountCount; i++)
+		{
+			str = <span class="hljs-string">"account"</span>+i+<span class="hljs-string">"_password"</span>;
+			localStorage.removeItem(str);
+			<span class="hljs-keyword">if</span>(debug) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Removed:"</span>,str);
+
+			str = <span class="hljs-string">"account"</span>+i;
+			localStorage.removeItem(str);
+			<span class="hljs-keyword">if</span>(debug) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Removed:"</span>,str);
+		}
+		localStorage.accountCount = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">if</span>(debug)
+		{
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Removed: accountCount"</span>);
+			<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"--"</span>);
+		}
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-69">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-69">&#182;</a>
+              </div>
+              <p>Stores the name of the currently logged-in account into session storage.
+@params “userName” must refer to the userName of a locally stored Account object.
+@post The name of the current account will be retrievable from storage until the current session is ended.
+@return “true” if the account was successfully stored, “false” if the account could not be found in local storage.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	setCurrentAccount(userName)
+	{
+		<span class="hljs-keyword">let</span> accountList = <span class="hljs-keyword">this</span>.retrieveAllAccounts();
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; accountList.length; i++)
+		{
+			<span class="hljs-keyword">if</span>(accountList[i].userName == userName)
+			{
+				sessionStorage.currentAccount = userName;
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+			}
+		}
+		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Failed to update session storage; "</span>+userName+<span class="hljs-string">" could not be found in local storage."</span>);
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-70">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-70">&#182;</a>
+              </div>
+              <p>Obtains from session storage the account that is currently logged-in.
+@return The name of the account obtained from storage, empty string if no account has been stored.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	getCurrentAccount()
+	{
+		<span class="hljs-keyword">if</span>(sessionStorage.currentAccount)
+			<span class="hljs-keyword">return</span> sessionStorage.currentAccount;
+		<span class="hljs-keyword">else</span>
+			<span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
+	}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-71">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-71">&#182;</a>
+              </div>
+              <p>Resets the currently logged-in account by wiping storage.
+@post currentAccount will no longer contain the name of the current account.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>	
+	clearCurrentAccount()
+	{
+		sessionStorage.currentAccount = <span class="hljs-string">""</span>;
+	}
+}</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

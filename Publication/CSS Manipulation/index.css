@@ -1,0 +1,14 @@
+p
+{
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	margin: auto;
+	width: 75%;
+}
+
+.subHeader
+{
+	font-size: 24px;
+	font-weight: bold;
+}

@@ -1,0 +1,50 @@
+<html>
+  <div id="left"></div>
+  <div id="right"></div>
+  <div id="top"></div>
+  <div id="bottom"></div>
+
+  <div class = 'head'><b>Event Planner</b></div>
+    <head>
+      <img src="supercoolcalendarlogo.png" alt="SUPER COOL CALENDAR" id = "logo">
+    </head>
+    <link rel="stylesheet" href="index.css">
+    <body>
+      <div id = "loginWindow">
+        <div id="notLoggedIn">
+          <div align="right">
+          Username:
+          <input id = "username" type="text"/>
+          </div>
+          <div align ="right">
+          Password:
+          <input id = "password" type="text"/>
+          </div>
+          <div align = "right">
+            <input type="button" id = "login" value="Login"/>
+            <input type="button" id = "signup" onclick="location.href='signup.html'" value = "Sign Up"/>
+          </div>
+        </div>
+        <div id="loggedIn">
+          <div align="right" id = "loginStatus">
+            Currently logged in as:
+          </div>
+          <div align="right" id = "logoutMessage">
+            <span>Not you?</span>
+            <input type="button" id="logout" value="Log Out"></input>
+          </div>
+        </div>
+      </div>
+      <head><b>Welcome! Please login to create or manage your events or click below to view current events.</b></head>
+      <p> </p>
+      <div id = "navigation">
+        <input id = "create" type="button" value="Create New Event"/> <!---button link code from https://stackoverflow.com/questions/24903148/navigate-between-html-files --->
+        <input id = "join" type="button" value="Join Existing Events" onclick="location.href='attendee.html'"/>
+        <input id = "manage" type="button" value="Manage Your Events"/>
+      </div>
+      <div id = "error"></div>
+      <script src="index.js"></script>
+      <script src="Event.js"></script>
+      <script src="storageManager.js"></script>
+    </body>
+</html>
