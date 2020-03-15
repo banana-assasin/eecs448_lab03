@@ -975,13 +975,21 @@ if they are logged in it stores their selected times and links it to the event t
     <span class="hljs-keyword">let</span> userName = sm.getCurrentAccount();
 
     <span class="hljs-keyword">if</span>(userName == <span class="hljs-string">""</span>){
-      <span class="hljs-keyword">this</span>.eventTable.insertRow(<span class="hljs-number">4</span>);
-      <span class="hljs-keyword">this</span>.eventTable.insertCell(<span class="hljs-number">0</span>);
+      <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>])
+      {
+        <span class="hljs-keyword">this</span>.eventTable.insertRow(<span class="hljs-number">4</span>);
+        <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].insertCell(<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].cells[<span class="hljs-number">0</span>].setAttribute(<span class="hljs-string">"colspan"</span>, <span class="hljs-keyword">this</span>.event.times.length+<span class="hljs-number">1</span>)
+      }
       <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].cells[<span class="hljs-number">0</span>].innerText = <span class="hljs-string">"We don't know your name! Please log in to join event."</span>;
       <span class="hljs-keyword">return</span>;
     }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(userName == <span class="hljs-keyword">this</span>.event.author){
-      <span class="hljs-keyword">this</span>.eventTable.insertRow(<span class="hljs-number">4</span>);
-      <span class="hljs-keyword">this</span>.eventTable.insertCell(<span class="hljs-number">0</span>);
+      <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>])
+      {
+        <span class="hljs-keyword">this</span>.eventTable.insertRow(<span class="hljs-number">4</span>);
+        <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].insertCell(<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].cells[<span class="hljs-number">0</span>].setAttribute(<span class="hljs-string">"colspan"</span>, <span class="hljs-keyword">this</span>.event.times.length+<span class="hljs-number">1</span>)
+      }
       <span class="hljs-keyword">this</span>.eventTable.rows[<span class="hljs-number">4</span>].cells[<span class="hljs-number">0</span>].innerText = <span class="hljs-string">"You are the creator of this event, to change times please go to Manage Events."</span>;
       <span class="hljs-keyword">return</span>;
     }<span class="hljs-keyword">else</span>{

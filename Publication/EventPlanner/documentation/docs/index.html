@@ -175,6 +175,17 @@
 
             </div>
             
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-comment">/*/https://medium.com/javascript-in-plain-english/how-to-detect-a-sequence-of-keystrokes-in-javascript-83ec6ffd8e93
+/the code below was mostly copied from the above source (the keydown part listener that shows the jpeg image)
+      let buffer = [];
+      let lastKeyTime = Date.now();
+      document.addEventListener('keydown', event =&gt; {
+        const charList = 'biggiecheese';
+        const key = event.key.toLowerCase();
+
+</span></pre></div></div>
+            
         </li>
         
         
@@ -184,16 +195,31 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p><a href="https://medium.com/javascript-in-plain-english/how-to-detect-a-sequence-of-keystrokes-in-javascript-83ec6ffd8e93">https://medium.com/javascript-in-plain-english/how-to-detect-a-sequence-of-keystrokes-in-javascript-83ec6ffd8e93</a>
-the code below was mostly copied from the above source (the keydown part listener that shows the jpeg image)</p>
+              <p>we are only interested in alphanumeric keys</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">let</span> buffer = [];
-      <span class="hljs-keyword">let</span> lastKeyTime = <span class="hljs-built_in">Date</span>.now();
-      <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">'keydown'</span>, event =&gt; {
-        <span class="hljs-keyword">const</span> charList = <span class="hljs-string">'biggiecheese'</span>;
-        <span class="hljs-keyword">const</span> key = event.key.toLowerCase();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        if (charList.indexOf(key) === -1) return;
+
+        const currentTime = Date.now();
+
+        if (currentTime - lastKeyTime &gt; 1000) {
+            buffer = [];
+        }
+
+        buffer.push(key);
+        lastKeyTime = currentTime;
+        let answer = buffer.join('');
+        if(answer == "biggiecheese"){
+            document.body.style.background = "#f3f3f3 url('biggiecheese.jpeg') no-repeat center top";
+        }*/
+
+    /*});*/
+
+
+
+    loginButton.addEventListener("click", (e) =&gt; {
+        if (loginUsername.value == "" || loginPassword.value == "") {</pre></div></div>
             
         </li>
         
@@ -203,41 +229,6 @@ the code below was mostly copied from the above source (the keydown part listene
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>we are only interested in alphanumeric keys</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (charList.indexOf(key) === <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span>;
-
-        <span class="hljs-keyword">const</span> currentTime = <span class="hljs-built_in">Date</span>.now();
-
-        <span class="hljs-keyword">if</span> (currentTime - lastKeyTime &gt; <span class="hljs-number">1000</span>) {
-            buffer = [];
-        }
-
-        buffer.push(key);
-        lastKeyTime = currentTime;
-        <span class="hljs-keyword">let</span> answer = buffer.join(<span class="hljs-string">''</span>);
-        <span class="hljs-keyword">if</span>(answer == <span class="hljs-string">"biggiecheese"</span>){
-            <span class="hljs-built_in">document</span>.body.style.background = <span class="hljs-string">"#f3f3f3 url('biggiecheese.jpeg') no-repeat center top"</span>;
-        }
-
-    });
-
-
-
-    loginButton.addEventListener(<span class="hljs-string">"click"</span>, (e) =&gt; {
-        <span class="hljs-keyword">if</span> (loginUsername.value == <span class="hljs-string">""</span> || loginPassword.value == <span class="hljs-string">""</span>) {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>tell user both inputs must be filled</p>
 
@@ -258,11 +249,11 @@ the code below was mostly copied from the above source (the keydown part listene
         </li>
         
         
-        <li id="section-7">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>check if username and password match an account in local storage, then if successful, store current account id that is logged in</p>
 
@@ -301,11 +292,11 @@ the code below was mostly copied from the above source (the keydown part listene
         </li>
         
         
-        <li id="section-8">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>@pre User must be logged in
 @post Logs the user out</p>
@@ -338,11 +329,11 @@ the code below was mostly copied from the above source (the keydown part listene
         </li>
         
         
-        <li id="section-9">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>tell user they must be logged in to create an event</p>
 
@@ -362,11 +353,11 @@ the code below was mostly copied from the above source (the keydown part listene
         </li>
         
         
-        <li id="section-10">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>tell user they must be logged in to create an event</p>
 
