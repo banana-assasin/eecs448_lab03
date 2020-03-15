@@ -3,6 +3,12 @@ body
   background-color: #DDEAF6;
 }
 
+h1, h2
+{
+  color: #cc5500;
+  font-family: "Times New Roman", Times, serif;
+}
+
 h1
 {
   text-align: center;
@@ -14,3 +20,41 @@ h1
   display: table;
 }
 /* Clearfix hack learned from W3 schools page. https://www.w3schools.com/cssref/pr_class_float.asp*/
+
+img:hover
+{
+  opacity: 0.8;
+}
+
+#Snuggles2
+{
+  content: url("Snuggles2.jpg");
+  width: 90%;
+}
+#Snuggles2:hover
+{
+  content: url("SnugglesPranked2.jpg");
+  width: 90%;
+}
+
+#Snuggles
+{
+  content: url("Snuggles.jpg");
+  width: 90%;
+}
+#Snuggles:hover
+{
+  content: url("SnugglesPranked.jpg");
+  width: 90%;
+}
+
+#Khione
+{
+  content: url("IMG_1322.jpg");
+  width:90%
+}
+#Khione:hover
+{
+  content: url("KhionePranked.jpg");
+  width:90%
+}
