@@ -10,6 +10,12 @@ body
   background-color: #DDEAF6;
 }
 
+h1, h2, h3
+{
+  color: #cc5500;
+  font-family: "Times New Roman", Times, serif;
+}
+
 h1
 {
   text-align: center;
