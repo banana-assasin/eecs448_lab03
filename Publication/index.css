@@ -3,3 +3,14 @@
   clear: both;
   display: table;
 }
+/* Clearfix hack learned from W3 schools page. https://www.w3schools.com/cssref/pr_class_float.asp*/
+
+body
+{
+  background-color: #DDEAF6;
+}
+
+h1
+{
+  text-align: center;
+}
